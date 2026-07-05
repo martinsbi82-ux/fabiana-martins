@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Pré-visualização autônoma] Fabiana Martins — Commercial Operations Consultant</title>
+<meta name="description" content="Fabiana Martins ajuda empresas B2B a diagnosticar, redesenhar e escalar suas operações comerciais com o Reset Comercial™, um método em quatro fases: Diagnose, Design, Deploy e Scale.">
+<link rel="canonical" href="https://martinsbi82-ux.github.io/fabiana-martins-consulting/index.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fabiana Martins — Commercial Operations Consultant">
+<meta property="og:description" content="Diagnóstico, desenho, deploy e escala de operações comerciais B2B com o Reset Comercial™.">
+<meta property="og:url" content="https://martinsbi82-ux.github.io/fabiana-martins-consulting/index.html">
+<meta property="og:image" content="https://martinsbi82-ux.github.io/fabiana-martins-consulting/assets/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icons/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12181f">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;1,300;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Fabiana Martins Consulting — Design Tokens
+   Paleta: "Reset Operacional" — tons de instrumento de precisão
+   ========================================================================== */
+
+:root {
+  /* Cor — base */
+  --ink: #12181f;          /* texto principal / fundos escuros */
+  --ink-soft: #232c36;     /* fundo escuro secundário */
+  --paper: #f2f1ec;        /* fundo claro base */
+  --paper-raised: #ffffff; /* cartões sobre o paper */
+
+  /* Cor — acento */
+  --brass: #a9812e;        /* acento primário — precisão, instrumento */
+  --brass-soft: #cdae6c;   /* brass em fundos escuros / hover */
+  --teal: #29424d;         /* acento secundário — sistemas, operação */
+  --teal-soft: #3f5e6b;
+
+  /* Cor — neutros de apoio */
+  --slate: #5b6472;        /* texto secundário */
+  --slate-soft: #89919c;   /* texto terciário / placeholders */
+  --line: #dad6cb;         /* hairlines sobre paper */
+  --line-dark: #333e49;    /* hairlines sobre ink */
+
+  /* Estado */
+  --success: #3f6b4f;
+  --focus: #a9812e;
+
+  /* Tipografia */
+  --font-display: "Fraunces", "Iowan Old Style", "Georgia", serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  /* Escala tipográfica (fluida) */
+  --fs-display: clamp(2.6rem, 3.2vw + 1.6rem, 5.4rem);
+  --fs-h1: clamp(2.1rem, 1.6vw + 1.6rem, 3.4rem);
+  --fs-h2: clamp(1.5rem, 1vw + 1.1rem, 2.2rem);
+  --fs-h3: clamp(1.15rem, 0.5vw + 1rem, 1.5rem);
+  --fs-body: 1.05rem;
+  --fs-small: 0.9rem;
+  --fs-eyebrow: 0.78rem;
+
+  /* Espaçamento */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6.5rem;
+  --space-7: 9rem;
+
+  /* Layout */
+  --container: 1180px;
+  --container-narrow: 760px;
+  --radius: 2px;
+  --border: 1px solid var(--line);
+
+  /* Movimento */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur-med: 420ms;
+  --dur-slow: 720ms;
+}
+
+
+/* ==========================================================================
+   Fabiana Martins Consulting — Estilos Globais
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 var(--space-2); color: var(--slate); }
+
+::selection { background: var(--brass); color: var(--paper); }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+.container--narrow { max-width: var(--container-narrow); }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: var(--space-2);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.4em;
+  height: 1px;
+  background: var(--brass);
+}
+
+.section { padding: var(--space-6) 0; }
+.section--tight { padding: var(--space-5) 0; }
+.section--ink { background: var(--ink); color: var(--paper); }
+.section--ink p { color: var(--line-dark); }
+.section--ink .eyebrow { color: var(--brass-soft); }
+.section--ink .eyebrow::before { background: var(--brass-soft); }
+.section--raised { background: var(--paper-raised); }
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: var(--space-5);
+}
+.section-head h2 { font-size: var(--fs-h2); }
+.section-head--center { margin-left: auto; margin-right: auto; text-align: center; }
+
+/* ---------------------------------------------------------------------- */
+/* Botões                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.95em 1.7em;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+.btn--primary { background: var(--ink); color: var(--paper); }
+.btn--primary:hover { background: var(--brass); border-color: var(--brass); color: var(--ink); }
+
+.btn--on-dark { border-color: var(--line-dark); color: var(--paper); }
+.btn--on-dark:hover { background: var(--brass-soft); border-color: var(--brass-soft); color: var(--ink); }
+
+.btn--arrow::after { content: "→"; transition: transform var(--dur-fast) var(--ease); }
+.btn--arrow:hover::after { transform: translateX(3px); }
+
+/* ---------------------------------------------------------------------- */
+/* Cabeçalho                                                               */
+/* ---------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(242, 241, 236, 0.9);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: var(--border);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.logo svg { height: 28px; width: auto; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 22px;
+  position: relative;
+}
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--ink);
+  transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.nav-toggle span { top: 50%; }
+.nav-toggle span::before { top: -8px; }
+.nav-toggle span::after { top: 8px; }
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { transform: translateY(8px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { transform: translateY(-8px) rotate(-45deg); }
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.main-nav a:hover,
+.main-nav a[aria-current="page"] {
+  color: var(--ink);
+  border-color: var(--brass);
+}
+
+.header-actions { display: flex; align-items: center; gap: var(--space-3); }
+.header-actions .btn { padding: 0.7em 1.3em; }
+
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                    */
+/* ---------------------------------------------------------------------- */
+
+.hero {
+  padding: var(--space-7) 0 var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero .container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.hero h1 { font-size: var(--fs-display); }
+.hero .lede { font-size: 1.15rem; max-width: 46ch; }
+
+.hero-meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: var(--border);
+}
+.hero-meta div { font-family: var(--font-mono); font-size: var(--fs-small); }
+.hero-meta strong { display: block; font-family: var(--font-display); font-size: 1.6rem; color: var(--ink); }
+.hero-meta span { color: var(--slate); }
+
+.hero-cta { display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap; }
+
+/* ---------------------------------------------------------------------- */
+/* Dial de Reset — elemento assinatura                                    */
+/* Representa as 4 fases: Diagnose → Design → Deploy → Scale              */
+/* ---------------------------------------------------------------------- */
+
+.reset-dial { width: 100%; max-width: 420px; margin: 0 auto; }
+.reset-dial svg { width: 100%; height: auto; }
+
+.reset-dial .dial-arc { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.reset-dial .dial-progress {
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 503;
+  stroke-dashoffset: 503;
+  transition: stroke-dashoffset 1.8s var(--ease);
+}
+.reset-dial.is-visible .dial-progress { stroke-dashoffset: 0; }
+
+.reset-dial .dial-tick { fill: var(--slate-soft); }
+.reset-dial .dial-tick.is-active { fill: var(--brass); }
+.reset-dial .dial-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+.reset-dial .dial-needle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  transform-origin: 210px 210px;
+  transition: transform 1.6s var(--ease);
+}
+.reset-dial .dial-center { fill: var(--ink); }
+.reset-dial .dial-readout {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--brass);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Linha do tempo / Metodologia (fases)                                    */
+/* ---------------------------------------------------------------------- */
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  counter-reset: phase;
+}
+
+.phase-card {
+  border-top: 3px solid var(--line);
+  padding-top: var(--space-2);
+  position: relative;
+  transition: border-color var(--dur-med) var(--ease);
+}
+.phase-card.is-active,
+.phase-card:hover { border-color: var(--brass); }
+
+.phase-card .phase-index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--brass);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+.phase-card h3 { font-size: 1.2rem; }
+.phase-card p { font-size: 0.94rem; }
+
+.phase-detail {
+  margin-top: var(--space-6);
+  display: grid;
+  gap: var(--space-6);
+}
+.phase-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-top: var(--border);
+}
+.phase-row:last-child { border-bottom: var(--border); }
+.phase-row .phase-num {
+  font-family: var(--font-mono);
+  color: var(--brass);
+  font-size: var(--fs-small);
+}
+.phase-row .phase-name { font-family: var(--font-display); font-size: 1.7rem; }
+.phase-row .phase-week { color: var(--slate-soft); font-family: var(--font-mono); font-size: 0.8rem; }
+.phase-outputs {
+  margin-top: var(--space-2);
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.phase-outputs li {
+  padding-left: 1.4em;
+  position: relative;
+  font-size: 0.95rem;
+  color: var(--slate);
+}
+.phase-outputs li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--brass);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Grades e Cartões                                                        */
+/* ---------------------------------------------------------------------- */
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+
+.card {
+  background: var(--paper-raised);
+  border: var(--border);
+  padding: var(--space-4);
+  transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -32px rgba(18, 24, 31, 0.35); }
+.card h3 { font-size: 1.15rem; }
+.card .card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.pricing-card {
+  background: var(--paper-raised);
+  border: var(--border);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.pricing-card.is-featured {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.pricing-card.is-featured p,
+.pricing-card.is-featured li { color: var(--line-dark); }
+.pricing-card.is-featured .card-tag { color: var(--brass-soft); }
+.pricing-card .price { font-family: var(--font-display); font-size: 2rem; margin: var(--space-1) 0; }
+.pricing-card .price span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--slate-soft); }
+.pricing-card ul { list-style: none; padding: 0; margin: var(--space-2) 0; display: grid; gap: 0.5rem; }
+.pricing-card li { padding-left: 1.3em; position: relative; font-size: 0.92rem; }
+.pricing-card li::before { content: "◆"; font-size: 0.55em; position: absolute; left: 0; top: 0.5em; color: var(--brass); }
+
+/* ---------------------------------------------------------------------- */
+/* Depoimentos / Prova social                                             */
+/* ---------------------------------------------------------------------- */
+
+.quote-block {
+  border-left: 2px solid var(--brass);
+  padding-left: var(--space-3);
+  margin: var(--space-4) 0;
+}
+.quote-block p { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); font-style: italic; }
+.quote-block cite { font-family: var(--font-mono); font-size: 0.8rem; font-style: normal; color: var(--slate-soft); }
+
+.logo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  opacity: 0.7;
+}
+.logo-strip span {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate);
+  border: 1px solid var(--line);
+  padding: 0.5em 0.9em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Formulário de contato                                                  */
+/* ---------------------------------------------------------------------- */
+
+.form-grid { display: grid; gap: var(--space-3); }
+.form-row { display: grid; gap: var(--space-3); grid-template-columns: 1fr 1fr; }
+
+.field { display: grid; gap: 0.4rem; }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.85em 1em;
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  color: var(--ink);
+  border-radius: var(--radius);
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--brass); }
+.field textarea { resize: vertical; min-height: 140px; }
+
+.form-status {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  min-height: 1.4em;
+}
+.form-status[data-state="success"] { color: var(--success); }
+.form-status[data-state="error"] { color: #a1372c; }
+
+.form-note { font-size: 0.85rem; color: var(--slate-soft); margin-top: var(--space-2); }
+
+/* ---------------------------------------------------------------------- */
+/* Contato — coluna lateral                                                */
+/* ---------------------------------------------------------------------- */
+
+.contact-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--space-6); }
+.contact-list { list-style: none; padding: 0; margin: var(--space-3) 0; display: grid; gap: var(--space-3); }
+.contact-list a { display: flex; flex-direction: column; gap: 0.15rem; }
+.contact-list .contact-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.contact-list .contact-value { font-size: 1.05rem; color: var(--ink); border-bottom: 1px solid transparent; width: fit-content; }
+.contact-list a:hover .contact-value { border-color: var(--brass); }
+
+/* ---------------------------------------------------------------------- */
+/* Blog                                                                    */
+/* ---------------------------------------------------------------------- */
+
+.post-list { display: grid; gap: 0; }
+.post-item {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-top: var(--border);
+  transition: background var(--dur-fast) var(--ease);
+}
+.post-list .post-item:last-child { border-bottom: var(--border); }
+.post-item:hover { background: var(--paper-raised); }
+.post-item time { font-family: var(--font-mono); font-size: 0.78rem; color: var(--slate-soft); }
+.post-item h3 { font-size: 1.15rem; margin: 0; }
+.post-item .post-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--brass);
+  align-self: center;
+}
+
+.newsletter-box {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.newsletter-box p { color: var(--line-dark); margin: 0; }
+.newsletter-form { display: flex; gap: var(--space-1); }
+.newsletter-form input {
+  padding: 0.85em 1em;
+  border: 1px solid var(--line-dark);
+  background: transparent;
+  color: var(--paper);
+  font-family: var(--font-body);
+  min-width: 220px;
+}
+.newsletter-form input::placeholder { color: var(--slate-soft); }
+
+/* ---------------------------------------------------------------------- */
+/* CTA de rodapé de seção                                                  */
+/* ---------------------------------------------------------------------- */
+
+.cta-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.cta-banner h2 { font-size: var(--fs-h1); max-width: 14ch; }
+
+/* ---------------------------------------------------------------------- */
+/* Rodapé                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.site-footer {
+  background: var(--ink);
+  color: var(--line-dark);
+  padding: var(--space-5) 0 var(--space-3);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line-dark);
+}
+.footer-grid h4 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass-soft);
+  margin-bottom: var(--space-2);
+}
+.footer-grid ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+.footer-grid a:hover { color: var(--paper); }
+.footer-brand .logo { color: var(--paper); }
+.footer-brand p { max-width: 32ch; margin-top: var(--space-2); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.footer-bottom a:hover { color: var(--paper); }
+
+/* ---------------------------------------------------------------------- */
+/* Revelação ao rolar                                                      */
+/* ---------------------------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+}
+[data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Fallback: caso o JS não rode, o conteúdo permanece visível */
+.no-js [data-reveal] { opacity: 1; transform: none; }
+
+/* ---------------------------------------------------------------------- */
+/* Skip link / acessibilidade                                             */
+/* ---------------------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1em 1.4em;
+  z-index: 1000;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.skip-link:focus { left: var(--space-2); top: var(--space-2); }
+
+
+/* ==========================================================================
+   Fabiana Martins Consulting — Responsividade
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .contact-layout { grid-template-columns: 1fr; gap: var(--space-4); }
+  .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; }
+  .footer-grid .footer-col--legal { grid-column: 1 / -1; }
+}
+
+@media (max-width: 900px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .reset-dial { max-width: 320px; order: -1; }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .phases { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+  :root { --space-6: 4.5rem; --space-7: 5.5rem; }
+
+  .nav-toggle { display: block; }
+
+  .main-nav {
+    position: fixed;
+    inset: 78px 0 0 0;
+    background: var(--paper);
+    display: none;
+    padding: var(--space-4) var(--space-3);
+    overflow-y: auto;
+  }
+  .main-nav.is-open { display: block; }
+  .main-nav ul { flex-direction: column; gap: var(--space-3); }
+  .main-nav a { font-size: 1rem; }
+
+  .header-actions .btn span { display: none; }
+  .header-actions .btn { padding: 0.7em 1em; }
+
+  .grid-3,
+  .grid-2,
+  .phases,
+  .form-row { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+
+  .phase-row { grid-template-columns: 1fr; gap: var(--space-1); }
+
+  .post-item { grid-template-columns: 1fr; gap: 0.3rem; }
+
+  .cta-banner { flex-direction: column; align-items: flex-start; }
+
+  .newsletter-box { flex-direction: column; align-items: flex-start; }
+  .newsletter-form { width: 100%; }
+  .newsletter-form input { flex: 1; min-width: 0; }
+
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hero-meta { flex-direction: column; gap: var(--space-2); }
+}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Fabiana Martins Consulting",
+  "founder": {
+    "@type": "Person",
+    "name": "Fabiana Martins",
+    "jobTitle": "Commercial Operations Consultant",
+    "email": "fabianamartins.consulting@gmail.com",
+    "sameAs": ["https://www.linkedin.com/in/m82yefabi/"]
+  },
+  "url": "https://martinsbi82-ux.github.io/fabiana-martins-consulting/",
+  "areaServed": "Global",
+  "description": "Consultoria em operações comerciais B2B com o método Reset Comercial™."
+}
+</script>
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo" aria-label="Fabiana Martins — Página inicial">
+        <svg viewBox="0 0 340 40" role="img" aria-hidden="true">
+          <text x="0" y="28" font-family="Fraunces, Georgia, serif" font-size="27" font-weight="600" fill="#12181F">Fabiana</text>
+          <text x="93" y="28" font-family="Fraunces, Georgia, serif" font-size="27" font-weight="300" font-style="italic" fill="#12181F">Martins</text>
+          <rect x="0" y="34" width="12" height="2" fill="#A9812E"/>
+        </svg>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegação principal" id="menu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="servicos.html">Serviços</a></li>
+          <li><a href="metodologia.html">Metodologia</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://www.linkedin.com/in/m82yefabi/" target="_blank" rel="noopener" class="btn" aria-label="Perfil no LinkedIn (abre em nova aba)">
+          <span>LinkedIn</span> ↗
+        </a>
+        <a href="contato.html" class="btn btn--primary">Agendar diagnóstico</a>
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div>
+          <span class="eyebrow">Commercial Operations Consultant</span>
+          <h1>Sua operação comercial não precisa de mais esforço. Precisa de um reset.</h1>
+          <p class="lede">Eu diagnostico onde sua receita está travando, redesenho o processo comercial e implemento a operação que sustenta o próximo patamar de crescimento — sem depender de mais uma contratação.</p>
+
+          <div class="hero-cta">
+            <a href="contato.html" class="btn btn--primary btn--arrow">Agendar diagnóstico gratuito</a>
+            <a href="metodologia.html" class="btn">Conhecer o método</a>
+          </div>
+
+          <div class="hero-meta">
+            <div><strong>4</strong><span>fases estruturadas</span></div>
+            <div><strong>90</strong><span>dias até o deploy</span></div>
+            <div><strong>B2B</strong><span>foco setorial</span></div>
+          </div>
+        </div>
+
+        <div class="reset-dial" aria-hidden="true">
+          <svg viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg">
+            <path class="dial-arc" d="M50,210 A160,160 0 0 1 370,210" />
+            <path class="dial-progress" d="M50,210 A160,160 0 0 1 370,210" />
+
+            <circle class="dial-tick is-active" cx="50" cy="210" r="4"></circle>
+            <circle class="dial-tick" cx="130" cy="71.4" r="4"></circle>
+            <circle class="dial-tick" cx="290" cy="71.4" r="4"></circle>
+            <circle class="dial-tick" cx="370" cy="210" r="4"></circle>
+
+            <text class="dial-label" x="50" y="232" text-anchor="middle">Diagnose</text>
+            <text class="dial-label" x="130" y="55" text-anchor="middle">Design</text>
+            <text class="dial-label" x="290" y="55" text-anchor="middle">Deploy</text>
+            <text class="dial-label" x="370" y="232" text-anchor="middle">Scale</text>
+
+            <line class="dial-needle" x1="210" y1="210" x2="210" y2="64"></line>
+            <circle class="dial-center" cx="210" cy="210" r="7"></circle>
+
+            <text class="dial-readout" x="210" y="205" text-anchor="middle" dy="-14">RESET COMERCIAL™</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos / prova social -->
+    <section class="section section--tight section--raised">
+      <div class="container">
+        <p class="eyebrow">Operações já resetadas</p>
+        <div class="logo-strip">
+          <span>Indústria &amp; Manufatura</span>
+          <span>Distribuição B2B</span>
+          <span>Food Service</span>
+          <span>Representação Comercial</span>
+          <span>Atacado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- O problema -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">O diagnóstico</span>
+          <h2>Times comerciais que trabalham mais e vendem no mesmo ritmo têm um problema de operação, não de esforço.</h2>
+          <p>CRM subutilizado, funil sem critério, metas sem rota e comissão sem lógica: sintomas diferentes da mesma causa — a operação comercial nunca foi desenhada, só foi crescendo.</p>
+        </div>
+
+        <div class="grid-3" data-reveal-group>
+          <div class="card">
+            <span class="card-tag">Sintoma 01</span>
+            <h3>Pipeline opaco</h3>
+            <p>Ninguém sabe, com precisão, em que estágio cada oportunidade está — nem por quê ela avança ou trava.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">Sintoma 02</span>
+            <h3>Metas desconectadas da rota</h3>
+            <p>Metas são definidas por planilha, não pela capacidade real de cobertura de carteira e território.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">Sintoma 03</span>
+            <h3>Comissão sem lógica comercial</h3>
+            <p>O plano de incentivo premia volume, não o comportamento que a estratégia comercial exige.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metodologia teaser -->
+    <section class="section section--ink">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">O método</span>
+          <h2>Reset Comercial™: quatro fases, uma operação redesenhada.</h2>
+          <p>Não é um curso, nem um relatório de consultoria para guardar na gaveta. É um método de intervenção direta na operação, com entregas em cada fase.</p>
+        </div>
+
+        <div class="phases" data-reveal-group>
+          <div class="phase-card">
+            <span class="phase-index">01</span>
+            <h3>Diagnose</h3>
+            <p>Mapeamento do funil, da carteira e dos gargalos reais de receita.</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-index">02</span>
+            <h3>Design</h3>
+            <p>Desenho do novo processo comercial, papéis, metas e critérios de qualificação.</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-index">03</span>
+            <h3>Deploy</h3>
+            <p>Implementação no CRM, treinamento do time e ativação da nova rotina comercial.</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-index">04</span>
+            <h3>Scale</h3>
+            <p>Painéis de acompanhamento e ajustes contínuos para sustentar o crescimento.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-5)">
+          <a href="metodologia.html" class="btn btn--on-dark btn--arrow">Ver a metodologia completa</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Depoimento -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="quote-block" data-reveal>
+          <p>“Em três meses, o time entendeu pela primeira vez por que perdia negócios — e o que fazer a respeito.”</p>
+          <cite>Diretor Comercial · Distribuidora B2B, Sul do Brasil</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="section section--raised">
+      <div class="container">
+        <div class="cta-banner" data-reveal>
+          <h2>Pronta para diagnosticar sua operação comercial?</h2>
+          <a href="contato.html" class="btn btn--primary btn--arrow">Agendar conversa inicial</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <svg viewBox="0 0 340 40" role="img" aria-hidden="true" style="height:24px">
+              <text x="0" y="28" font-family="Fraunces, Georgia, serif" font-size="27" font-weight="600" fill="#F2F1EC">Fabiana</text>
+              <text x="93" y="28" font-family="Fraunces, Georgia, serif" font-size="27" font-weight="300" font-style="italic" fill="#F2F1EC">Martins</text>
+              <rect x="0" y="34" width="12" height="2" fill="#A9812E"/>
+            </svg>
+          </a>
+          <p>Commercial Operations Consultant. Diagnóstico, desenho, deploy e escala de operações comerciais B2B.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="metodologia.html">Metodologia</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="mailto:fabianamartins.consulting@gmail.com">fabianamartins.consulting@gmail.com</a></li>
+            <li><a href="https://www.linkedin.com/in/m82yefabi/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col--legal">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="LICENSE">Licença</a></li>
+            <li><a href="contato.html">Fale comigo</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Fabiana Martins. Todos os direitos reservados.</span>
+        <span>Reset Comercial™ — Diagnose · Design · Deploy · Scale</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+/**
+ * Fabiana Martins Consulting — main.js
+ * Navegação, menu mobile, ano do rodapé e registro do service worker.
+ */
+(function () {
+  "use strict";
+
+  document.documentElement.classList.remove("no-js");
+
+  // Menu mobile -----------------------------------------------------------
+  var toggle = document.querySelector(".nav-toggle");
+  var nav = document.querySelector(".main-nav");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", function () {
+      var isOpen = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      });
+    });
+  }
+
+  // Marca o link de navegação ativo ---------------------------------------
+  var currentPage = (window.location.pathname.split("/").pop() || "index.html");
+  document.querySelectorAll(".main-nav a").forEach(function (link) {
+    var href = link.getAttribute("href");
+    if (href === currentPage || (currentPage === "" && href === "index.html")) {
+      link.setAttribute("aria-current", "page");
+    }
+  });
+
+  // Ano dinâmico no rodapé --------------------------------------------------
+  document.querySelectorAll("[data-year]").forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // Cabeçalho com sombra ao rolar ------------------------------------------
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var onScroll = function () {
+      header.style.boxShadow = window.scrollY > 8
+        ? "0 8px 24px -20px rgba(18,24,31,0.6)"
+        : "none";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+})();
+
+
+/**
+ * Fabiana Martins Consulting — animations.js
+ * Revelação de elementos ao rolar e ativação do Dial de Reset (elemento assinatura).
+ * Usa IntersectionObserver com fallback seguro caso indisponível.
+ */
+(function () {
+  "use strict";
+
+  var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function revealAll(nodeList) {
+    nodeList.forEach(function (el) { el.classList.add("is-visible"); });
+  }
+
+  // Escalona a revelação de itens dentro de uma mesma grade -----------------
+  document.querySelectorAll("[data-reveal-group]").forEach(function (group) {
+    Array.prototype.forEach.call(group.children, function (child, index) {
+      child.setAttribute("data-reveal", "");
+      child.style.transitionDelay = (index * 90) + "ms";
+    });
+  });
+
+  var revealTargets = document.querySelectorAll("[data-reveal]");
+  var dialTargets = document.querySelectorAll(".reset-dial");
+
+  if (prefersReduced || !("IntersectionObserver" in window)) {
+    revealAll(revealTargets);
+    revealAll(dialTargets);
+    return;
+  }
+
+  var revealObserver = new IntersectionObserver(
+    function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  revealTargets.forEach(function (el) { revealObserver.observe(el); });
+  dialTargets.forEach(function (el) { revealObserver.observe(el); });
+})();
+
+
+/**
+ * Fabiana Martins Consulting — form.js
+ * Validação leve do formulário de contato e envio via mailto (sem backend).
+ * Para produção, recomenda-se ligar a um serviço como Formspree, Resend ou
+ * uma função serverless — bastando trocar handleSubmit pelo fetch() correspondente.
+ */
+(function () {
+  "use strict";
+
+  var CONTACT_EMAIL = "fabianamartins.consulting@gmail.com";
+
+  var form = document.querySelector("#contact-form");
+  if (!form) return;
+
+  var status = form.querySelector(".form-status");
+
+  function setStatus(message, state) {
+    if (!status) return;
+    status.textContent = message;
+    status.setAttribute("data-state", state || "");
+  }
+
+  function validate(data) {
+    if (!data.nome || data.nome.trim().length < 2) {
+      return "Informe seu nome completo.";
+    }
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(data.email || "")) {
+      return "Informe um e-mail válido.";
+    }
+    if (!data.mensagem || data.mensagem.trim().length < 10) {
+      return "Conte um pouco mais sobre o seu desafio comercial (mín. 10 caracteres).";
+    }
+    return null;
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var formData = new FormData(form);
+    var data = Object.fromEntries(formData.entries());
+
+    var error = validate(data);
+    if (error) {
+      setStatus(error, "error");
+      return;
+    }
+
+    var subject = "Novo contato pelo site — " + data.nome;
+    var bodyLines = [
+      "Nome: " + data.nome,
+      "E-mail: " + data.email,
+      "Empresa: " + (data.empresa || "—"),
+      "Serviço de interesse: " + (data.servico || "—"),
+      "",
+      data.mensagem
+    ];
+
+    var mailtoUrl =
+      "mailto:" + CONTACT_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(bodyLines.join("\n"));
+
+    window.location.href = mailtoUrl;
+    setStatus("Abrindo seu aplicativo de e-mail para confirmar o envio…", "success");
+    form.reset();
+  });
+
+  // Newsletter (blog.html) ---------------------------------------------------
+  var newsletterForm = document.querySelector("#newsletter-form");
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var email = newsletterForm.querySelector("input[type='email']").value;
+      var note = newsletterForm.querySelector(".form-status");
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        if (note) { note.textContent = "Informe um e-mail válido."; note.setAttribute("data-state", "error"); }
+        return;
+      }
+      window.location.href =
+        "mailto:" + CONTACT_EMAIL +
+        "?subject=" + encodeURIComponent("Inscrição na newsletter") +
+        "&body=" + encodeURIComponent("Quero receber os próximos conteúdos. Meu e-mail: " + email);
+      if (note) { note.textContent = "Quase lá — confirme o envio no seu e-mail."; note.setAttribute("data-state", "success"); }
+      newsletterForm.reset();
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
