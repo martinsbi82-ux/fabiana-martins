@@ -1,0 +1,15 @@
+{
+  "name": "Caderno — Curadoria de Moda Brasileira",
+  "short_name": "Caderno",
+  "description": "Centro de inteligência da curadoria de moda brasileira: pesquisa, marcas, tendências, planejamento editorial e conhecimento em um único lugar.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5F0E6",
+  "theme_color": "#211C16",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
