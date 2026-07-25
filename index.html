@@ -6,12 +6,501 @@
 <title>Caderno — Curadoria de Moda Brasileira</title>
 <meta name="description" content="Centro de inteligência da curadoria de moda brasileira: pesquisa, marcas, tendências, planejamento editorial e conhecimento em um único lugar.">
 <meta name="theme-color" content="#211C16">
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/styles.css">
+<style>
+:root{
+  --ink:#211C16;
+  --paper:#F5F0E6;
+  --paper-2:#FCFAF3;
+  --sand:#E6D9C1;
+  --clay:#98502F;
+  --clay-deep:#743A22;
+  --clay-soft:#EAD9C9;
+  --olive:#666238;
+  --line:#D8CBAC;
+  --line-soft:#E9E0CB;
+  --danger:#9C4A3A;
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+input,textarea,select{font-family:inherit;}
+
+/* ---------- layout shell ---------- */
+.app{display:flex;min-height:100vh;}
+
+.sidebar{
+  width:236px;
+  flex-shrink:0;
+  background:var(--paper-2);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;left:0;bottom:0;
+  z-index:40;
+  transition:transform .25s ease;
+}
+.sidebar-brand{
+  padding:28px 22px 18px;
+  border-bottom:1px solid var(--line-soft);
+  position:relative;
+}
+.sidebar-brand::before{
+  content:'Nº 01';
+  position:absolute;
+  top:28px;right:22px;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:10.5px;
+  color:var(--clay);
+  opacity:.75;
+}
+.sidebar-brand .eyebrow{
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--olive);
+  font-weight:600;
+}
+.sidebar-brand h1{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:21px;
+  margin-top:4px;
+  line-height:1.2;
+}
+.sidebar-brand .sub{
+  font-size:11px;
+  color:#8a8370;
+  margin-top:4px;
+  font-style:italic;
+  font-family:var(--font-display);
+}
+.nav{flex:1;overflow-y:auto;padding:14px 10px;}
+.nav-group-label{
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#9a9280;
+  padding:14px 12px 6px;
+  font-weight:600;
+}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  border-radius:6px;
+  font-size:13.5px;
+  color:#4a4638;
+  cursor:pointer;
+  transition:background .15s;
+  position:relative;
+}
+.nav-item:hover{background:var(--sand);}
+.nav-item.active{background:var(--ink);color:var(--paper-2);}
+.nav-item .ic{width:16px;text-align:center;font-size:13px;opacity:.8;}
+.sidebar-foot{
+  padding:14px 22px 20px;
+  border-top:1px solid var(--line-soft);
+  font-size:10.5px;
+  color:#a39c88;
+  letter-spacing:.03em;
+}
+
+.menu-toggle{
+  display:none;
+  position:fixed;top:14px;left:14px;z-index:50;
+  width:38px;height:38px;
+  background:var(--ink);color:var(--paper);
+  border:none;border-radius:8px;
+  font-size:16px;
+  align-items:center;justify-content:center;
+}
+
+.main{
+  margin-left:236px;
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:18px 32px;
+  border-bottom:1px solid var(--line);
+  background:var(--paper-2);
+  position:sticky;top:0;z-index:20;
+}
+.topbar .view-title{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:500;
+  flex-shrink:0;
+}
+.search-wrap{
+  flex:1;
+  max-width:420px;
+  position:relative;
+}
+.search-wrap input{
+  width:100%;
+  padding:9px 14px 9px 32px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--paper);
+  font-size:13px;
+  color:var(--ink);
+}
+.search-wrap input:focus{outline:none;border-color:var(--clay);}
+.search-wrap .sic{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:#9a9280;}
+
+.content{
+  padding:28px 32px 60px;
+  max-width:1180px;
+  width:100%;
+}
+
+/* ---------- generic components ---------- */
+.eyebrow-label{
+  font-size:10.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--olive);
+  font-weight:600;
+  margin-bottom:6px;
+  display:block;
+}
+.section-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.section-head h2{
+  font-family:var(--font-display);
+  font-size:26px;
+  font-weight:500;
+}
+.section-sub{color:#847d6c;font-size:13px;margin-top:3px;}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 16px;
+  border-radius:20px;
+  border:1px solid var(--ink);
+  background:var(--ink);
+  color:var(--paper-2);
+  font-size:12.5px;
+  font-weight:500;
+  letter-spacing:.02em;
+  transition:opacity .15s;
+}
+.btn:hover{opacity:.82;}
+.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line);}
+.btn.secondary:hover{background:var(--sand);opacity:1;}
+.btn.danger{background:transparent;border-color:var(--danger);color:var(--danger);}
+.btn.small{padding:5px 12px;font-size:11.5px;}
+
+.grid{display:grid;gap:16px;}
+.grid.cols-4{grid-template-columns:repeat(4,1fr);}
+.grid.cols-3{grid-template-columns:repeat(3,1fr);}
+.grid.cols-2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:900px){.grid.cols-4{grid-template-columns:repeat(2,1fr);}.grid.cols-3{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr;}}
+
+.card{
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px;
+}
+.stat-card .num{
+  font-family:var(--font-display);
+  font-size:32px;
+  font-weight:500;
+  line-height:1;
+}
+.stat-card .lbl{
+  font-size:11.5px;
+  color:#847d6c;
+  margin-top:6px;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.record-card{
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px 18px;
+  cursor:pointer;
+  transition:border-color .15s, transform .15s;
+  position:relative;
+}
+.record-card:hover{border-color:var(--clay);}
+.record-card .archive-no{
+  display:inline-block;
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:10.5px;
+  color:var(--clay-deep);
+  letter-spacing:.03em;
+  background:var(--clay-soft);
+  padding:2px 8px;
+  border-radius:3px;
+}
+.record-card h3{
+  font-family:var(--font-display);
+  font-size:17px;
+  font-weight:500;
+  margin:4px 0 6px;
+}
+.record-card .meta{font-size:12px;color:#847d6c;line-height:1.5;}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{
+  font-size:10.5px;
+  padding:3px 9px;
+  border-radius:12px;
+  background:var(--sand);
+  color:#4a4638;
+  letter-spacing:.02em;
+}
+.tag.status-Pesquisando{background:#EFE6D2;color:#7d6b3d;}
+.tag.status-Acompanhando{background:#DDE3D0;color:#5c6b3f;}
+.tag.status-Aprovada{background:#D9E6DD;color:#3d6b52;}
+.tag.status-Em.avaliação{background:#EAD9CE;color:var(--clay-deep);}
+.tag.status-Descartada{background:#E9D6D2;color:var(--danger);}
+
+.empty-state{
+  text-align:center;
+  padding:60px 20px;
+  color:#9a9280;
+  border:1px dashed var(--line);
+  border-radius:10px;
+  font-size:13.5px;
+}
+.empty-state .ic{font-size:26px;margin-bottom:10px;display:block;}
+
+/* ---------- modal ---------- */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(34,31,26,.45);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  z-index:100;
+  padding:40px 16px;
+  overflow-y:auto;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--paper-2);
+  border-radius:14px;
+  width:100%;
+  max-width:640px;
+  padding:26px 28px 28px;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.modal-head h3{font-family:var(--font-display);font-size:20px;font-weight:500;}
+.modal-close{background:none;border:none;font-size:18px;color:#9a9280;}
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:11px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:#847d6c;
+  margin-bottom:5px;
+  font-weight:600;
+}
+.field input,.field textarea,.field select{
+  width:100%;
+  padding:9px 11px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:var(--paper);
+  font-size:13.5px;
+  color:var(--ink);
+}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--clay);}
+.field textarea{min-height:70px;resize:vertical;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+.modal-actions{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);}
+
+/* ---------- detail drawer ---------- */
+.drawer-overlay{
+  position:fixed;inset:0;
+  background:rgba(34,31,26,.4);
+  display:none;
+  z-index:90;
+  justify-content:flex-end;
+}
+.drawer-overlay.open{display:flex;}
+.drawer{
+  background:var(--paper-2);
+  width:100%;
+  max-width:560px;
+  height:100%;
+  overflow-y:auto;
+  padding:30px 30px 60px;
+}
+.drawer .archive-no{font-family:var(--font-display);font-style:italic;color:var(--clay);font-size:12px;}
+.drawer h2{font-family:var(--font-display);font-size:26px;font-weight:500;margin:6px 0 4px;}
+.drawer-close{position:absolute;top:20px;right:20px;background:none;border:none;font-size:20px;color:#9a9280;}
+.dblock{margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);}
+.dblock .dlabel{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#847d6c;font-weight:600;margin-bottom:6px;}
+.dblock .dval{font-size:13.5px;line-height:1.6;color:#3a352b;white-space:pre-wrap;}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* ---------- table (concorrentes) ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--paper-2);}
+th{
+  text-align:left;padding:11px 14px;
+  background:var(--sand);
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#5c563f;
+  white-space:nowrap;
+}
+td{padding:11px 14px;border-top:1px solid var(--line-soft);white-space:nowrap;}
+
+/* ---------- kanban (editorial) ---------- */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;overflow-x:auto;}
+@media(max-width:1000px){.kanban{grid-template-columns:repeat(5,220px);}}
+.kanban-col{min-width:200px;}
+.kanban-col-head{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#847d6c;font-weight:600;margin-bottom:10px;padding-left:2px;}
+.kanban-card{background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px;cursor:pointer;}
+.kanban-card:hover{border-color:var(--clay);}
+.kanban-card .plat{font-size:10px;color:var(--clay);text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
+.kanban-card .tit{font-size:13px;margin-top:4px;line-height:1.4;}
+.kanban-card .dt{font-size:10.5px;color:#9a9280;margin-top:6px;}
+
+/* ---------- week agenda ---------- */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;}
+@media(max-width:900px){.week-grid{grid-template-columns:1fr;}}
+.day-col{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:12px;min-height:120px;}
+.day-col .day-head{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#847d6c;font-weight:600;margin-bottom:8px;}
+.routine-suggestion{
+  background:var(--clay-soft);
+  border:1px dashed var(--clay);
+  border-radius:6px;
+  padding:7px 9px;
+  margin-bottom:10px;
+  font-size:11.5px;
+  color:var(--clay-deep);
+  cursor:pointer;
+  transition:opacity .15s;
+}
+.routine-suggestion:hover{opacity:.8;}
+.routine-suggestion .rlabel{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;opacity:.8;margin-bottom:2px;}
+.routine-suggestion .radd{float:right;font-weight:600;}
+.task-chip{
+  background:var(--paper);border:1px solid var(--line-soft);border-radius:6px;
+  padding:7px 9px;margin-bottom:7px;font-size:11.5px;cursor:pointer;
+  border-left:3px solid var(--clay);
+}
+.task-chip.prio-Alta{border-left-color:var(--danger);}
+.task-chip.prio-Média{border-left-color:var(--clay);}
+.task-chip.prio-Baixa{border-left-color:var(--olive);}
+.task-chip .cat{font-size:9.5px;text-transform:uppercase;color:#9a9280;letter-spacing:.04em;}
+
+/* ---------- goals ---------- */
+.goal-bar-bg{background:var(--sand);border-radius:10px;height:8px;overflow:hidden;margin-top:8px;}
+.goal-bar-fill{background:var(--clay);height:100%;border-radius:10px;transition:width .3s;}
+
+/* ---------- reports bars ---------- */
+.report-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.report-bar-label{width:150px;font-size:12px;flex-shrink:0;color:#4a4638;}
+.report-bar-track{flex:1;background:var(--sand);border-radius:6px;height:16px;overflow:hidden;}
+.report-bar-fill{background:var(--olive);height:100%;}
+.report-bar-val{width:28px;text-align:right;font-size:12px;color:#847d6c;flex-shrink:0;}
+
+/* ---------- assistant ---------- */
+.chat-box{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:18px;min-height:260px;max-height:440px;overflow-y:auto;margin-bottom:14px;}
+.chat-msg{margin-bottom:16px;}
+.chat-msg .who{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--olive);font-weight:600;margin-bottom:4px;}
+.chat-msg.user .who{color:var(--clay);}
+.chat-msg .txt{font-size:13.5px;line-height:1.6;white-space:pre-wrap;}
+.chat-input-row{display:flex;gap:10px;}
+.chat-input-row textarea{flex:1;min-height:60px;}
+.ai-quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.ai-quick button{
+  font-size:11.5px;padding:6px 12px;border-radius:16px;
+  background:var(--sand);border:1px solid var(--line);color:#4a4638;
+}
+
+.mood-thumb-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.mood-thumb{position:relative;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid var(--line);}
+.mood-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.mood-thumb-del{
+  position:absolute;top:2px;right:2px;
+  width:18px;height:18px;border-radius:50%;border:none;
+  background:rgba(33,28,22,.75);color:#fff;font-size:10px;line-height:1;
+}
+.rel-check-list{
+  max-height:160px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;background:var(--paper);
+}
+.rel-check{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 2px;cursor:pointer;}
+.rel-check input{margin:0;}
+.rel-tag{cursor:pointer;background:var(--clay-soft);color:var(--clay-deep);}
+.rel-tag:hover{opacity:.8;}
+.rel-empty{font-size:12px;color:#9a9280;}
+.moodboard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+.mood-card{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;}
+.mood-card .swatch{height:110px;background:linear-gradient(135deg,var(--sand),var(--line));display:flex;align-items:center;justify-content:center;color:#9a9280;font-size:11px;}
+.mood-card .mc-body{padding:10px 12px;}
+.mood-card .mc-cat{font-size:9.5px;text-transform:uppercase;color:var(--clay);letter-spacing:.05em;font-weight:600;}
+.mood-card h4{font-family:var(--font-display);font-size:14px;margin-top:3px;}
+
+.pill-select{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.pill-select button{
+  padding:6px 14px;border-radius:16px;font-size:12px;
+  border:1px solid var(--line);background:var(--paper);color:#4a4638;
+}
+.pill-select button.active{background:var(--ink);color:var(--paper-2);border-color:var(--ink);}
+
+.scroll-x{overflow-x:auto;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;}
+
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--paper-2);
+  padding:10px 20px;border-radius:20px;font-size:12.5px;
+  z-index:200;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .menu-toggle{display:flex;}
+  .topbar{padding:16px 18px 16px 60px;}
+  .content{padding:20px 18px 60px;}
+}
+</style>
 </head>
 <body>
 
@@ -51,34 +540,1362 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- núcleo: dados, storage (localStorage), navegação, helpers relacionais -->
-<script src="./js/core.js"></script>
-
-<!-- módulos de cada área do caderno -->
-<script src="./js/view-dashboard.js"></script>
-<script src="./js/view-agenda.js"></script>
-<script src="./js/view-editorial.js"></script>
-<script src="./js/view-marcas.js"></script>
-<script src="./js/view-tendencias.js"></script>
-<script src="./js/view-colecoes.js"></script>
-<script src="./js/view-concorrentes.js"></script>
-<script src="./js/view-pesquisa.js"></script>
-<script src="./js/view-biblioteca.js"></script>
-<script src="./js/view-moodboards.js"></script>
-<script src="./js/view-objetivos.js"></script>
-<script src="./js/view-relatorios.js"></script>
-<script src="./js/view-busca.js"></script>
-<script src="./js/view-assistente.js"></script>
-
-<!-- inicialização -->
-<script src="./js/main.js"></script>
-
 <script>
-  if('serviceWorker' in navigator){
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(()=>{ /* funciona normalmente mesmo se o SW falhar */ });
+/* ============================================================
+   CADERNO — Centro de Inteligência da Curadoria de Moda Brasileira
+   Vanilla JS, persistência via localStorage (funciona 100% no navegador,
+   sem servidor e sem dependências externas)
+   ============================================================ */
+
+const KEYS = {
+  tasks:'caderno:tasks', editorial:'caderno:editorial', brands:'caderno:brands',
+  trends:'caderno:trends', library:'caderno:library', moodboards:'caderno:moodboards',
+  collections:'caderno:collections', market:'caderno:market', goals:'caderno:goals'
+};
+
+let DB = { tasks:[], editorial:[], brands:[], trends:[], library:[], moodboards:[], collections:[], market:[], goals:[] };
+let currentView = 'dashboard';
+let searchTerm = '';
+
+/* ---------------- storage helpers (localStorage, síncrono) ---------------- */
+async function loadAll(){
+  for(const k of Object.keys(KEYS)){
+    try{
+      const raw = localStorage.getItem(KEYS[k]);
+      DB[k] = raw ? JSON.parse(raw) : [];
+    }catch(e){ DB[k] = []; }
+  }
+}
+async function save(key){
+  try{
+    localStorage.setItem(KEYS[key], JSON.stringify(DB[key]));
+  }catch(e){
+    console.error('storage error', e);
+    if(e && e.name === 'QuotaExceededError'){
+      toast('Armazenamento cheio — remova imagens grandes dos moodboards ou exporte e limpe dados antigos');
+    } else {
+      toast('Não foi possível salvar os dados neste navegador');
+    }
+  }
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function archiveNo(list, idx){ return String(idx+1).padStart(3,'0'); }
+function fmtDate(d){
+  if(!d) return '—';
+  try{ const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch(e){ return d; }
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+function esc(s){ return (s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------------- relational helpers (marca ↔ tendência ↔ conteúdo ↔ coleção ↔ biblioteca) ---------------- */
+function relLabel(item){ return item.nome || item.titulo || item.tema || item.marca || '(sem nome)'; }
+function multiCheckList(name, items, selectedIds){
+  selectedIds = selectedIds || [];
+  if(!items.length) return `<div class="meta" style="padding:6px 0;">Nada cadastrado ainda.</div>`;
+  return `<div class="rel-check-list">${items.map(it=>`
+    <label class="rel-check"><input type="checkbox" name="${name}" value="${it.id}" ${selectedIds.includes(it.id)?'checked':''}> ${esc(relLabel(it))}</label>
+  `).join('')}</div>`;
+}
+function singleSelect(name, items, selectedId){
+  return `<select name="${name}"><option value="">— nenhum —</option>${items.map(it=>`<option value="${it.id}" ${selectedId===it.id?'selected':''}>${esc(relLabel(it))}</option>`).join('')}</select>`;
+}
+function relTag(item, view, extra){
+  return `<span class="tag rel-tag" data-goto="${view}" data-goto-id="${item.id}">${esc(relLabel(item))}${extra?' · '+esc(extra):''}</span>`;
+}
+function attachGotoLinks(root){
+  (root||document).querySelectorAll('[data-goto]').forEach(el=>{
+    el.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      const view = el.dataset.goto, id = el.dataset.gotoId;
+      if(view==='marcas') openBrandDetail(id);
+      if(view==='tendencias') openTrendDetail(id);
+      if(view==='colecoes') openColDetail(id);
+      if(view==='biblioteca'){ const l=DB.library.find(x=>x.id===id); if(l) openLibModal(l); }
+      if(view==='editorial'){ setView('editorial'); }
+    });
+  });
+}
+/* backlinks: which records elsewhere point to this brand/trend/collection id */
+function trendsForBrand(brandId){ return DB.trends.filter(t=>(t.relatedBrands||[]).includes(brandId)); }
+function collectionsForBrand(brandId){ return DB.collections.filter(c=>(c.relatedBrands||[]).includes(brandId)); }
+function contentForBrand(brandId){ return DB.editorial.filter(e=>e.relatedBrand===brandId); }
+function libraryForBrand(brandId){ return DB.library.filter(l=>(l.relatedBrands||[]).includes(brandId)); }
+function brandsForTrend(trendId){ return DB.brands.filter(b=>trendsForBrand(b.id).some(t=>t.id===trendId)); }
+function contentForTrend(trendId){ return DB.editorial.filter(e=>e.relatedTrend===trendId); }
+function libraryForTrend(trendId){ return DB.library.filter(l=>(l.relatedTrends||[]).includes(trendId)); }
+function contentForCollection(colId){ return DB.editorial.filter(e=>e.relatedCollection===colId); }
+function brandsForCollection(colId){ const c=DB.collections.find(x=>x.id===colId); return c ? DB.brands.filter(b=>(c.relatedBrands||[]).includes(b.id)) : []; }
+
+/* ---------------- nav config ---------------- */
+const NAV = [
+  {group:'Visão geral', items:[
+    {id:'dashboard', label:'Dashboard', ic:'◆'},
+    {id:'assistente', label:'Assistente', ic:'✦'},
+  ]},
+  {group:'Planejamento', items:[
+    {id:'agenda', label:'Agenda', ic:'▤'},
+    {id:'editorial', label:'Planejamento Editorial', ic:'▥'},
+    {id:'objetivos', label:'Objetivos', ic:'◎'},
+  ]},
+  {group:'Curadoria', items:[
+    {id:'marcas', label:'Banco de Marcas', ic:'▣'},
+    {id:'tendencias', label:'Tendências', ic:'✺'},
+    {id:'colecoes', label:'Coleções', ic:'▦'},
+    {id:'concorrentes', label:'Concorrentes', ic:'⇄'},
+    {id:'pesquisa', label:'Pesquisa de Mercado', ic:'⚲'},
+  ]},
+  {group:'Conhecimento', items:[
+    {id:'biblioteca', label:'Biblioteca', ic:'▧'},
+    {id:'moodboards', label:'Moodboards', ic:'▨'},
+    {id:'relatorios', label:'Relatórios', ic:'▩'},
+  ]},
+];
+
+function renderNav(){
+  const nav = document.getElementById('navList');
+  nav.innerHTML = NAV.map(g=>`
+    <div class="nav-group-label">${g.group}</div>
+    ${g.items.map(it=>`<div class="nav-item ${currentView===it.id?'active':''}" data-view="${it.id}">
+      <span class="ic">${it.ic}</span><span>${it.label}</span>
+    </div>`).join('')}
+  `).join('');
+  nav.querySelectorAll('.nav-item').forEach(el=>{
+    el.addEventListener('click', ()=>{ setView(el.dataset.view); });
+  });
+}
+
+function setView(v){
+  currentView = v;
+  searchTerm='';
+  document.getElementById('globalSearch').value='';
+  renderNav();
+  const titles = {};
+  NAV.forEach(g=>g.items.forEach(it=>titles[it.id]=it.label));
+  document.getElementById('viewTitle').textContent = titles[v] || v;
+  document.getElementById('sidebar').classList.remove('open');
+  render();
+}
+
+/* ---------------- modal / drawer helpers ---------------- */
+function openModal(html){
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+function openDrawer(html){
+  document.getElementById('drawerBody').innerHTML = html;
+  document.getElementById('drawerOverlay').classList.add('open');
+}
+function closeDrawer(){ document.getElementById('drawerOverlay').classList.remove('open'); }
+
+document.getElementById('modalOverlay').addEventListener('click', e=>{ if(e.target.id==='modalOverlay') closeModal(); });
+document.getElementById('drawerOverlay').addEventListener('click', e=>{ if(e.target.id==='drawerOverlay') closeDrawer(); });
+document.getElementById('menuToggle').addEventListener('click', ()=> document.getElementById('sidebar').classList.toggle('open'));
+
+document.getElementById('globalSearch').addEventListener('input', e=>{
+  searchTerm = e.target.value.trim().toLowerCase();
+  if(searchTerm && currentView!=='busca'){ currentView='busca'; renderNav(); document.getElementById('viewTitle').textContent='Busca'; }
+  if(!searchTerm && currentView==='busca'){ setView('dashboard'); return; }
+  render();
+});
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(DB,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'caderno-curadoria-export.json';
+  a.click();
+  toast('Dados exportados');
+});
+
+/* ---------------- master render ---------------- */
+function render(){
+  const c = document.getElementById('content');
+  if(searchTerm){ c.innerHTML = viewBusca(); attachBuscaEvents(); return; }
+  switch(currentView){
+    case 'dashboard': c.innerHTML = viewDashboard(); attachDashboardEvents(); break;
+    case 'assistente': c.innerHTML = viewAssistente(); attachAssistenteEvents(); break;
+    case 'agenda': c.innerHTML = viewAgenda(); attachAgendaEvents(); break;
+    case 'editorial': c.innerHTML = viewEditorial(); attachEditorialEvents(); break;
+    case 'objetivos': c.innerHTML = viewObjetivos(); attachObjetivosEvents(); break;
+    case 'marcas': c.innerHTML = viewMarcas(); attachMarcasEvents(); break;
+    case 'tendencias': c.innerHTML = viewTendencias(); attachTendenciasEvents(); break;
+    case 'colecoes': c.innerHTML = viewColecoes(); attachColecoesEvents(); break;
+    case 'concorrentes': c.innerHTML = viewConcorrentes(); break;
+    case 'pesquisa': c.innerHTML = viewPesquisa(); attachPesquisaEvents(); break;
+    case 'biblioteca': c.innerHTML = viewBiblioteca(); attachBibliotecaEvents(); break;
+    case 'moodboards': c.innerHTML = viewMoodboards(); attachMoodboardsEvents(); break;
+    case 'relatorios': c.innerHTML = viewRelatorios(); break;
+    default: c.innerHTML = '<div class="empty-state">Módulo em construção.</div>';
+  }
+}
+
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function viewDashboard(){
+  const today = new Date().toISOString().slice(0,10);
+  const weekAhead = new Date(Date.now()+7*86400000).toISOString().slice(0,10);
+  const upcomingTasks = DB.tasks.filter(t=>t.prazo>=today && t.prazo<=weekAhead && !t.concluida)
+    .sort((a,b)=>a.prazo.localeCompare(b.prazo)).slice(0,5);
+  const scheduledContent = DB.editorial.filter(e=>e.status==='Agendado').slice(0,5);
+  const pendingBrands = DB.brands.filter(b=>b.status==='Pesquisando' || b.status==='Em avaliação').slice(0,5);
+  const weekTrends = DB.trends.filter(t=>{
+    if(!t.createdAt) return false;
+    return (Date.now()-new Date(t.createdAt).getTime()) < 7*86400000;
+  }).length;
+
+  return `
+  <div class="grid cols-4" style="margin-bottom:26px;">
+    <div class="card stat-card"><div class="num">${DB.brands.length}</div><div class="lbl">Marcas cadastradas</div></div>
+    <div class="card stat-card"><div class="num">${DB.trends.length}</div><div class="lbl">Tendências registradas</div></div>
+    <div class="card stat-card"><div class="num">${DB.collections.length}</div><div class="lbl">Coleções acompanhadas</div></div>
+    <div class="card stat-card"><div class="num">${weekTrends}</div><div class="lbl">Tendências esta semana</div></div>
+  </div>
+
+  <div class="grid cols-2">
+    <div>
+      <div class="section-head"><h2 style="font-size:18px;">Próximas tarefas</h2></div>
+      ${upcomingTasks.length ? upcomingTasks.map(t=>`
+        <div class="task-chip prio-${esc(t.prioridade)}" data-id="${t.id}">
+          <div class="cat">${esc(t.categoria)} · ${fmtDate(t.prazo)}</div>
+          <div>${esc(t.titulo)}</div>
+        </div>`).join('') : `<div class="empty-state"><span class="ic">▤</span>Nenhuma tarefa nos próximos 7 dias.</div>`}
+
+      <div class="section-head" style="margin-top:22px;"><h2 style="font-size:18px;">Marcas pendentes de análise</h2></div>
+      ${pendingBrands.length ? pendingBrands.map((b,i)=>`
+        <div class="task-chip" data-brand="${b.id}"><div class="cat">${esc(b.status)}</div><div>${esc(b.nome)}</div></div>
+      `).join('') : `<div class="empty-state"><span class="ic">▣</span>Nenhuma marca pendente.</div>`}
+    </div>
+
+    <div>
+      <div class="section-head"><h2 style="font-size:18px;">Conteúdos programados</h2></div>
+      ${scheduledContent.length ? scheduledContent.map(e=>`
+        <div class="task-chip" data-ed="${e.id}"><div class="cat">${esc(e.plataforma)} · ${fmtDate(e.data)}</div><div>${esc(e.tema)}</div></div>
+      `).join('') : `<div class="empty-state"><span class="ic">▥</span>Nada agendado ainda.</div>`}
+
+      <div class="section-head" style="margin-top:22px;"><h2 style="font-size:18px;">Prioridades</h2></div>
+      ${DB.tasks.filter(t=>t.prioridade==='Alta' && !t.concluida).slice(0,5).map(t=>`
+        <div class="task-chip prio-Alta" data-id="${t.id}"><div class="cat">${esc(t.categoria)}</div><div>${esc(t.titulo)}</div></div>
+      `).join('') || `<div class="empty-state"><span class="ic">◎</span>Sem prioridades altas no momento.</div>`}
+    </div>
+  </div>
+  `;
+}
+function attachDashboardEvents(){
+  document.querySelectorAll('[data-brand]').forEach(el=>el.addEventListener('click',()=>openBrandDetail(el.dataset.brand)));
+  document.querySelectorAll('[data-ed]').forEach(el=>el.addEventListener('click',()=>{ setView('editorial'); }));
+  document.querySelectorAll('[data-id]').forEach(el=>{ if(el.dataset.id) el.addEventListener('click',()=>{ setView('agenda'); }); });
+}
+
+
+/* ================================================================
+   AGENDA
+   ================================================================ */
+const CATS_AGENDA = ['Pesquisa','Curadoria','Conteúdo','Networking','Estudos','Reuniões','Eventos','Visitas','Organização'];
+const PRIORIDADES = ['Alta','Média','Baixa'];
+const ROTINA_SEMANAL = [
+  {dia:'Segunda', foco:'Pesquisa de mercado', categoria:'Pesquisa'},
+  {dia:'Terça', foco:'Análise de marcas', categoria:'Curadoria'},
+  {dia:'Quarta', foco:'Atualização das fichas', categoria:'Curadoria'},
+  {dia:'Quinta', foco:'Produção de conteúdo', categoria:'Conteúdo'},
+  {dia:'Sexta', foco:'Planejamento da próxima semana', categoria:'Organização'},
+  {dia:'Sábado', foco:'Pesquisa livre', categoria:'Pesquisa'},
+  {dia:'Domingo', foco:'Revisão e organização', categoria:'Organização'},
+];
+
+function weekDates(){
+  const now = new Date();
+  const day = now.getDay(); // 0 sun
+  const monday = new Date(now); monday.setDate(now.getDate() - ((day+6)%7));
+  return Array.from({length:7},(_,i)=>{ const d=new Date(monday); d.setDate(monday.getDate()+i); return d.toISOString().slice(0,10); });
+}
+function viewAgenda(){
+  const days = weekDates();
+  const dayNames = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+  return `
+  <div class="section-head">
+    <div><h2>Agenda</h2><div class="section-sub">Calendário semanal de atividades da curadoria</div></div>
+    <button class="btn" id="newTaskBtn">+ Nova atividade</button>
+  </div>
+  <div class="week-grid">
+    ${days.map((d,i)=>{
+      const items = DB.tasks.filter(t=>t.prazo===d).sort((a,b)=>(a.prioridade<b.prioridade?1:-1));
+      const rotina = ROTINA_SEMANAL[i];
+      return `<div class="day-col">
+        <div class="day-head">${dayNames[i]}<br><span style="color:#c2b89f;">${fmtDate(d)}</span></div>
+        <div class="routine-suggestion" data-suggest="${i}" data-date="${d}">
+          <span class="rlabel">Rotina sugerida</span>${esc(rotina.foco)} <span class="radd">+</span>
+        </div>
+        ${items.map(t=>`<div class="task-chip prio-${esc(t.prioridade)}" data-id="${t.id}">
+          <div class="cat">${esc(t.categoria)}</div>${esc(t.titulo)}
+        </div>`).join('') || ''}
+      </div>`;
+    }).join('')}
+  </div>
+  <div class="section-head" style="margin-top:30px;"><h2 style="font-size:18px;">Rotina semanal</h2></div>
+  <div class="grid cols-4" style="margin-bottom:8px;">
+    ${ROTINA_SEMANAL.map(r=>`<div class="card" style="padding:12px 14px;">
+      <div class="eyebrow-label" style="margin-bottom:2px;">${r.dia}</div>
+      <div style="font-size:13px;">${esc(r.foco)}</div>
+    </div>`).join('')}
+  </div>
+
+  <div class="section-head" style="margin-top:30px;"><h2 style="font-size:18px;">Todas as atividades</h2></div>
+  ${DB.tasks.length ? DB.tasks.slice().sort((a,b)=>(a.prazo||'').localeCompare(b.prazo||'')).map(t=>`
+    <div class="record-card" style="margin-bottom:10px;" data-id="${t.id}">
+      <div class="archive-no">${esc(t.categoria)} · ${esc(t.prioridade)}</div>
+      <h3 style="font-size:15px;">${esc(t.titulo)}</h3>
+      <div class="meta">${fmtDate(t.prazo)}${t.duracao?' · '+esc(t.duracao):''}${t.concluida?' · ✓ concluída':''}</div>
+    </div>`).join('') : `<div class="empty-state"><span class="ic">▤</span>Nenhuma atividade cadastrada ainda.</div>`}
+  `;
+}
+function taskForm(task, prefill){
+  const t = task || Object.assign({titulo:'',categoria:'Pesquisa',prioridade:'Média',prazo:new Date().toISOString().slice(0,10),duracao:'',observacoes:'',checklist:'',concluida:false}, prefill||{});
+  return `
+  <div class="modal-head"><h3>${task?'Editar atividade':'Nova atividade'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="taskForm">
+    <div class="field"><label>Título</label><input required name="titulo" value="${esc(t.titulo)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Categoria</label><select name="categoria">${CATS_AGENDA.map(c=>`<option ${t.categoria===c?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Prioridade</label><select name="prioridade">${PRIORIDADES.map(c=>`<option ${t.prioridade===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Prazo</label><input type="date" name="prazo" value="${t.prazo}"></div>
+      <div class="field"><label>Duração estimada</label><input name="duracao" placeholder="ex: 2h" value="${esc(t.duracao)}"></div>
+    </div>
+    <div class="field"><label>Checklist (uma linha por item)</label><textarea name="checklist">${esc(t.checklist)}</textarea></div>
+    <div class="field"><label>Observações</label><textarea name="observacoes">${esc(t.observacoes)}</textarea></div>
+    <div class="modal-actions">
+      <div>${task?`<button type="button" class="btn danger small" id="delTaskBtn">Excluir</button>`:''}</div>
+      <div style="display:flex;gap:8px;">
+        ${task?`<button type="button" class="btn secondary small" id="toggleDoneBtn">${t.concluida?'Marcar pendente':'Marcar concluída'}</button>`:''}
+        <button type="submit" class="btn small">Salvar</button>
+      </div>
+    </div>
+  </form>`;
+}
+function attachAgendaEvents(){
+  document.getElementById('newTaskBtn').addEventListener('click', ()=> openTaskModal());
+  document.querySelectorAll('[data-id]').forEach(el=>el.addEventListener('click',()=>{
+    const t = DB.tasks.find(x=>x.id===el.dataset.id); if(t) openTaskModal(t);
+  }));
+  document.querySelectorAll('[data-suggest]').forEach(el=>el.addEventListener('click',()=>{
+    const rotina = ROTINA_SEMANAL[Number(el.dataset.suggest)];
+    openTaskModal(null, {titulo:rotina.foco, categoria:rotina.categoria, prazo:el.dataset.date});
+  }));
+}
+function openTaskModal(task, prefill){
+  openModal(taskForm(task, prefill));
+  document.getElementById('taskForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const obj = Object.fromEntries(f.entries());
+    if(task){ Object.assign(task, obj); }
+    else { DB.tasks.push({id:uid(), ...obj, concluida:false}); }
+    await save('tasks'); closeModal(); render(); toast('Atividade salva');
+  });
+  if(task){
+    document.getElementById('delTaskBtn').addEventListener('click', async ()=>{
+      DB.tasks = DB.tasks.filter(x=>x.id!==task.id); await save('tasks'); closeModal(); render(); toast('Atividade excluída');
+    });
+    document.getElementById('toggleDoneBtn').addEventListener('click', async ()=>{
+      task.concluida = !task.concluida; await save('tasks'); closeModal(); render(); toast('Status atualizado');
     });
   }
+}
+
+
+/* ================================================================
+   PLANEJAMENTO EDITORIAL (Kanban)
+   ================================================================ */
+const ED_STATUS = ['Ideia','Em produção','Revisão','Agendado','Publicado'];
+const ED_TIPOS = ['Bastidores','Tendência','Marca','Editorial','Lifestyle','Curadoria','Processo','Educativo','Cases','Inspiração'];
+
+function viewEditorial(){
+  return `
+  <div class="section-head">
+    <div><h2>Planejamento Editorial</h2><div class="section-sub">Calendário de conteúdo — do rascunho à publicação</div></div>
+    <button class="btn" id="newEdBtn">+ Nova publicação</button>
+  </div>
+  <div class="kanban">
+    ${ED_STATUS.map(s=>{
+      const items = DB.editorial.filter(e=>e.status===s);
+      return `<div class="kanban-col">
+        <div class="kanban-col-head">${s} · ${items.length}</div>
+        ${items.map(e=>`<div class="kanban-card" data-id="${e.id}">
+          <div class="plat">${esc(e.plataforma||'—')} · ${esc(e.formato||'')}</div>
+          <div class="tit">${esc(e.tema)}</div>
+          <div class="dt">${fmtDate(e.data)}${e.horario?' · '+esc(e.horario):''}</div>
+          ${e.relatedBrand||e.relatedTrend?`<div class="dt" style="color:var(--clay);">${e.relatedBrand?esc(relLabel(DB.brands.find(b=>b.id===e.relatedBrand)||{})):''}${e.relatedBrand&&e.relatedTrend?' · ':''}${e.relatedTrend?esc(relLabel(DB.trends.find(t=>t.id===e.relatedTrend)||{})):''}</div>`:''}
+        </div>`).join('') || '<div style="font-size:11.5px;color:#c2b89f;padding:6px 0;">vazio</div>'}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+function edForm(item){
+  const e = item || {data:new Date().toISOString().slice(0,10),horario:'',plataforma:'Instagram',formato:'Feed',tema:'',objetivo:'',cta:'',palavrasChave:'',legenda:'',status:'Ideia',tipo:'Curadoria',relatedBrand:'',relatedTrend:'',relatedCollection:''};
+  return `
+  <div class="modal-head"><h3>${item?'Editar publicação':'Nova publicação'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="edForm">
+    <div class="field"><label>Tema</label><input required name="tema" value="${esc(e.tema)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Data</label><input type="date" name="data" value="${e.data}"></div>
+      <div class="field"><label>Horário</label><input name="horario" placeholder="ex: 18:00" value="${esc(e.horario)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Plataforma</label><input name="plataforma" value="${esc(e.plataforma)}"></div>
+      <div class="field"><label>Formato</label><input name="formato" value="${esc(e.formato)}" placeholder="Feed, Reels, Stories..."></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Tipo</label><select name="tipo">${ED_TIPOS.map(t=>`<option ${e.tipo===t?'selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="field"><label>Status</label><select name="status">${ED_STATUS.map(t=>`<option ${e.status===t?'selected':''}>${t}</option>`).join('')}</select></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Marca relacionada</label>${singleSelect('relatedBrand', DB.brands, e.relatedBrand)}</div>
+      <div class="field"><label>Tendência relacionada</label>${singleSelect('relatedTrend', DB.trends, e.relatedTrend)}</div>
+    </div>
+    <div class="field"><label>Coleção relacionada</label>${singleSelect('relatedCollection', DB.collections, e.relatedCollection)}</div>
+    <div class="field"><label>Objetivo</label><input name="objetivo" value="${esc(e.objetivo)}"></div>
+    <div class="field"><label>CTA</label><input name="cta" value="${esc(e.cta)}"></div>
+    <div class="field"><label>Palavras-chave</label><input name="palavrasChave" value="${esc(e.palavrasChave)}"></div>
+    <div class="field"><label>Legenda</label><textarea name="legenda">${esc(e.legenda)}</textarea></div>
+    <div class="modal-actions">
+      <div>${item?`<button type="button" class="btn danger small" id="delEdBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachEditorialEvents(){
+  document.getElementById('newEdBtn').addEventListener('click', ()=>openEdModal());
+  document.querySelectorAll('.kanban-card').forEach(el=>el.addEventListener('click',()=>{
+    const item = DB.editorial.find(x=>x.id===el.dataset.id); if(item) openEdModal(item);
+  }));
+}
+function openEdModal(item){
+  openModal(edForm(item));
+  document.getElementById('edForm').addEventListener('submit', async ev=>{
+    ev.preventDefault();
+    const obj = Object.fromEntries(new FormData(ev.target).entries());
+    if(item){ Object.assign(item, obj); } else { DB.editorial.push({id:uid(), ...obj}); }
+    await save('editorial'); closeModal(); render(); toast('Publicação salva');
+  });
+  if(item){
+    document.getElementById('delEdBtn').addEventListener('click', async ()=>{
+      DB.editorial = DB.editorial.filter(x=>x.id!==item.id); await save('editorial'); closeModal(); render(); toast('Publicação excluída');
+    });
+  }
+}
+
+
+/* ================================================================
+   BANCO DE MARCAS + FICHA DE ANÁLISE
+   ================================================================ */
+const BRAND_STATUS = ['Pesquisando','Acompanhando','Aprovada','Em avaliação','Descartada'];
+
+function viewMarcas(){
+  return `
+  <div class="section-head">
+    <div><h2>Banco de Marcas</h2><div class="section-sub">${DB.brands.length} marcas cadastradas</div></div>
+    <button class="btn" id="newBrandBtn">+ Nova marca</button>
+  </div>
+  <div class="pill-select" id="brandFilterRow">
+    <button class="active" data-status="Todas">Todas</button>
+    ${BRAND_STATUS.map(s=>`<button data-status="${s}">${s}</button>`).join('')}
+  </div>
+  <div class="grid cols-3" id="brandGrid"></div>
+  `;
+}
+function renderBrandGrid(filter){
+  const grid = document.getElementById('brandGrid');
+  let list = DB.brands;
+  if(filter && filter!=='Todas') list = list.filter(b=>b.status===filter);
+  grid.innerHTML = list.length ? list.map((b)=>{
+    const idx = DB.brands.indexOf(b);
+    return `<div class="record-card" data-id="${b.id}">
+      <div class="archive-no">MARCA ${archiveNo(DB.brands, idx)}</div>
+      <h3>${esc(b.nome)}</h3>
+      <div class="meta">${esc(b.categoria||'')}${b.cidade?' · '+esc(b.cidade):''}${b.estado?'/'+esc(b.estado):''}</div>
+      <div class="tag-row">
+        <span class="tag status-${esc(b.status)}">${esc(b.status)}</span>
+        ${(b.tags||'').split(',').filter(Boolean).slice(0,3).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">▣</span>Nenhuma marca nesta categoria ainda.</div>`;
+  grid.querySelectorAll('.record-card').forEach(el=>el.addEventListener('click',()=>openBrandDetail(el.dataset.id)));
+}
+function attachMarcasEvents(){
+  renderBrandGrid('Todas');
+  document.getElementById('newBrandBtn').addEventListener('click', ()=>openBrandModal());
+  document.querySelectorAll('#brandFilterRow button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#brandFilterRow button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderBrandGrid(btn.dataset.status);
+    });
+  });
+}
+function brandForm(b0){
+  const b = b0 || {nome:'',categoria:'',segmento:'',cidade:'',estado:'',instagram:'',site:'',contato:'',representante:'',preco:'',publico:'',posicionamento:'',estilo:'',tecidos:'',modelagens:'',cores:'',diferenciais:'',status:'Pesquisando',tags:'',observacoes:''};
+  return `
+  <div class="modal-head"><h3>${b0?'Editar marca':'Nova marca'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="brandForm">
+    <div class="field-row">
+      <div class="field"><label>Nome</label><input required name="nome" value="${esc(b.nome)}"></div>
+      <div class="field"><label>Status</label><select name="status">${BRAND_STATUS.map(s=>`<option ${b.status===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Categoria</label><input name="categoria" value="${esc(b.categoria)}" placeholder="Jeanswear, Alfaiataria..."></div>
+      <div class="field"><label>Segmento</label><input name="segmento" value="${esc(b.segmento)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Cidade</label><input name="cidade" value="${esc(b.cidade)}"></div>
+      <div class="field"><label>Estado</label><input name="estado" value="${esc(b.estado)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Instagram</label><input name="instagram" value="${esc(b.instagram)}"></div>
+      <div class="field"><label>Site</label><input name="site" value="${esc(b.site)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Contato</label><input name="contato" value="${esc(b.contato)}"></div>
+      <div class="field"><label>Representante</label><input name="representante" value="${esc(b.representante)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Preço</label><input name="preco" value="${esc(b.preco)}" placeholder="Faixa de preço"></div>
+      <div class="field"><label>Público</label><input name="publico" value="${esc(b.publico)}"></div>
+    </div>
+    <div class="field"><label>Posicionamento</label><input name="posicionamento" value="${esc(b.posicionamento)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Estilo</label><input name="estilo" value="${esc(b.estilo)}"></div>
+      <div class="field"><label>Principais tecidos</label><input name="tecidos" value="${esc(b.tecidos)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Modelagens</label><input name="modelagens" value="${esc(b.modelagens)}"></div>
+      <div class="field"><label>Cartela de cores</label><input name="cores" value="${esc(b.cores)}"></div>
+    </div>
+    <div class="field"><label>Diferenciais</label><textarea name="diferenciais">${esc(b.diferenciais)}</textarea></div>
+    <div class="field"><label>Tags (separadas por vírgula)</label><input name="tags" value="${esc(b.tags)}"></div>
+    <div class="field"><label>Observações</label><textarea name="observacoes">${esc(b.observacoes)}</textarea></div>
+    <div class="modal-actions">
+      <div>${b0?`<button type="button" class="btn danger small" id="delBrandBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function openBrandModal(b0){
+  openModal(brandForm(b0));
+  document.getElementById('brandForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const obj = Object.fromEntries(new FormData(e.target).entries());
+    if(b0){ Object.assign(b0, obj); } else { DB.brands.push({id:uid(), createdAt:new Date().toISOString(), analise:{}, ...obj}); }
+    await save('brands'); closeModal(); closeDrawer(); render(); toast('Marca salva');
+  });
+  if(b0){
+    document.getElementById('delBrandBtn').addEventListener('click', async ()=>{
+      DB.brands = DB.brands.filter(x=>x.id!==b0.id); await save('brands'); closeModal(); closeDrawer(); render(); toast('Marca excluída');
+    });
+  }
+}
+function openBrandDetail(id){
+  const b = DB.brands.find(x=>x.id===id); if(!b) return;
+  const idx = DB.brands.indexOf(b);
+  const a = b.analise || {};
+  openDrawer(`
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    <div class="archive-no">MARCA ${archiveNo(DB.brands, idx)}</div>
+    <h2>${esc(b.nome)}</h2>
+    <div class="tag-row"><span class="tag status-${esc(b.status)}">${esc(b.status)}</span>${(b.tags||'').split(',').filter(Boolean).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join('')}</div>
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button class="btn small" id="editBrandBtn">Editar cadastro</button>
+      <button class="btn secondary small" id="editAnaliseBtn">Ficha de análise</button>
+    </div>
+
+    <div class="dblock"><div class="dlabel">Perfil</div>
+      <div class="dgrid">
+        <div><div class="dlabel">Categoria</div><div class="dval">${esc(b.categoria)||'—'}</div></div>
+        <div><div class="dlabel">Cidade/UF</div><div class="dval">${esc(b.cidade)||'—'}${b.estado?'/'+esc(b.estado):''}</div></div>
+        <div><div class="dlabel">Posicionamento</div><div class="dval">${esc(b.posicionamento)||'—'}</div></div>
+        <div><div class="dlabel">Preço</div><div class="dval">${esc(b.preco)||'—'}</div></div>
+        <div><div class="dlabel">Estilo</div><div class="dval">${esc(b.estilo)||'—'}</div></div>
+        <div><div class="dlabel">Tecidos</div><div class="dval">${esc(b.tecidos)||'—'}</div></div>
+      </div>
+    </div>
+    <div class="dblock"><div class="dlabel">Contato</div>
+      <div class="dval">${esc(b.instagram)||'—'} ${b.site?'· '+esc(b.site):''}<br>${esc(b.contato)||''} ${b.representante?'· '+esc(b.representante):''}</div>
+    </div>
+    <div class="dblock"><div class="dlabel">Diferenciais</div><div class="dval">${esc(b.diferenciais)||'—'}</div></div>
+    <div class="dblock"><div class="dlabel">Observações</div><div class="dval">${esc(b.observacoes)||'—'}</div></div>
+
+    <div class="dblock" style="border-top:2px solid var(--clay);">
+      <div class="dlabel" style="color:var(--clay);">Ficha de análise</div>
+      <div class="dgrid" style="margin-top:10px;">
+        <div><div class="dlabel">DNA / Propósito</div><div class="dval">${esc(a.dna)||'—'}</div></div>
+        <div><div class="dlabel">Identidade visual</div><div class="dval">${esc(a.identidadeVisual)||'—'}</div></div>
+        <div><div class="dlabel">Qualidade / Acabamento</div><div class="dval">${esc(a.qualidade)||'—'}</div></div>
+        <div><div class="dlabel">Mix de produtos</div><div class="dval">${esc(a.mixProdutos)||'—'}</div></div>
+        <div><div class="dlabel">Concorrentes</div><div class="dval">${esc(a.concorrentes)||'—'}</div></div>
+        <div><div class="dlabel">Avaliação geral</div><div class="dval">${esc(a.avaliacao)||'—'}</div></div>
+      </div>
+      <div style="margin-top:12px;"><div class="dlabel">Insights e oportunidades</div><div class="dval">${esc(a.insights)||'—'}</div></div>
+      <div style="margin-top:12px;"><div class="dlabel">Notas pessoais</div><div class="dval">${esc(a.notas)||'—'}</div></div>
+      <div style="margin-top:8px;font-size:11.5px;color:#9a9280;">Última análise: ${a.dataAnalise?fmtDate(a.dataAnalise):'ainda não registrada'}</div>
+    </div>
+
+    <div class="dblock" style="border-top:2px solid var(--olive);">
+      <div class="dlabel" style="color:var(--olive);">Tendências vinculadas a esta marca</div>
+      <div class="tag-row">${trendsForBrand(b.id).length?trendsForBrand(b.id).map(t=>relTag(t,'tendencias')).join(''):'<span class="rel-empty">Nenhuma tendência vinculada ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Coleções desta marca</div>
+      <div class="tag-row">${collectionsForBrand(b.id).length?collectionsForBrand(b.id).map(c=>relTag(c,'colecoes')).join(''):'<span class="rel-empty">Nenhuma coleção vinculada ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Conteúdos sobre esta marca</div>
+      <div class="tag-row">${contentForBrand(b.id).length?contentForBrand(b.id).map(c=>relTag(c,'editorial')).join(''):'<span class="rel-empty">Nenhum conteúdo vinculado ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Referências na biblioteca</div>
+      <div class="tag-row">${libraryForBrand(b.id).length?libraryForBrand(b.id).map(l=>relTag(l,'biblioteca')).join(''):'<span class="rel-empty">Nenhuma referência vinculada ainda.</span>'}</div>
+    </div>
+  `);
+  document.getElementById('editBrandBtn').addEventListener('click', ()=>openBrandModal(b));
+  document.getElementById('editAnaliseBtn').addEventListener('click', ()=>openAnaliseModal(b));
+  attachGotoLinks();
+}
+function openAnaliseModal(b){
+  const a = b.analise || {};
+  openModal(`
+    <div class="modal-head"><h3>Ficha de análise — ${esc(b.nome)}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <form id="analiseForm">
+      <div class="field"><label>DNA / Propósito / História</label><textarea name="dna">${esc(a.dna)}</textarea></div>
+      <div class="field"><label>Identidade visual</label><textarea name="identidadeVisual">${esc(a.identidadeVisual)}</textarea></div>
+      <div class="field"><label>Qualidade e acabamento</label><textarea name="qualidade">${esc(a.qualidade)}</textarea></div>
+      <div class="field"><label>Mix de produtos (jeans, malharia, linho, alfaiataria...)</label><textarea name="mixProdutos">${esc(a.mixProdutos)}</textarea></div>
+      <div class="field"><label>Concorrentes diretos</label><input name="concorrentes" value="${esc(a.concorrentes)}"></div>
+      <div class="field"><label>Insights e oportunidades</label><textarea name="insights">${esc(a.insights)}</textarea></div>
+      <div class="field"><label>Avaliação geral</label><input name="avaliacao" value="${esc(a.avaliacao)}"></div>
+      <div class="field"><label>Notas pessoais</label><textarea name="notas">${esc(a.notas)}</textarea></div>
+      <div class="field"><label>Data da análise</label><input type="date" name="dataAnalise" value="${a.dataAnalise||new Date().toISOString().slice(0,10)}"></div>
+      <div class="modal-actions"><div></div><button type="submit" class="btn small">Salvar ficha</button></div>
+    </form>
+  `);
+  document.getElementById('analiseForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const obj = Object.fromEntries(new FormData(e.target).entries());
+    b.analise = obj;
+    await save('brands'); closeModal(); openBrandDetail(b.id); toast('Ficha de análise salva');
+  });
+}
+
+
+/* ================================================================
+   TENDÊNCIAS
+   ================================================================ */
+function viewTendencias(){
+  return `
+  <div class="section-head">
+    <div><h2>Tendências</h2><div class="section-sub">${DB.trends.length} tendências registradas</div></div>
+    <button class="btn" id="newTrendBtn">+ Nova tendência</button>
+  </div>
+  <div class="grid cols-3">
+    ${DB.trends.length ? DB.trends.map((t,i)=>`
+      <div class="record-card" data-id="${t.id}">
+        <div class="archive-no">TENDÊNCIA ${archiveNo(DB.trends,i)}</div>
+        <h3>${esc(t.nome)}</h3>
+        <div class="meta">${esc(t.temporada||'')} ${esc(t.ano||'')}${t.relevancia?' · Relevância: '+esc(t.relevancia):''}</div>
+        <div class="meta" style="margin-top:4px;">${(t.relatedBrands||[]).length} marca(s) vinculada(s)</div>
+        <div class="tag-row">${(t.cores||'').split(',').filter(Boolean).slice(0,4).map(c=>`<span class="tag">${esc(c.trim())}</span>`).join('')}</div>
+      </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">✺</span>Nenhuma tendência registrada ainda.</div>`}
+  </div>`;
+}
+function trendForm(t0){
+  const t = t0 || {nome:'',temporada:'',ano:new Date().getFullYear(),origem:'',referencias:'',cores:'',tecidos:'',modelagens:'',silhuetas:'',estampas:'',materiais:'',aplicacaoComercial:'',relevancia:'Média',observacoes:'',relatedBrands:[]};
+  return `
+  <div class="modal-head"><h3>${t0?'Editar tendência':'Nova tendência'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="trendForm">
+    <div class="field"><label>Nome</label><input required name="nome" value="${esc(t.nome)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Temporada</label><input name="temporada" value="${esc(t.temporada)}" placeholder="Primavera/Verão"></div>
+      <div class="field"><label>Ano</label><input name="ano" value="${esc(t.ano)}"></div>
+    </div>
+    <div class="field"><label>Origem / Referências</label><input name="origem" value="${esc(t.origem)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Cores (separadas por vírgula)</label><input name="cores" value="${esc(t.cores)}"></div>
+      <div class="field"><label>Tecidos</label><input name="tecidos" value="${esc(t.tecidos)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Modelagens / Silhuetas</label><input name="modelagens" value="${esc(t.modelagens)}"></div>
+      <div class="field"><label>Estampas / Materiais</label><input name="estampas" value="${esc(t.estampas)}"></div>
+    </div>
+    <div class="field"><label>Marcas relacionadas <span style="text-transform:none;font-weight:400;">(essa tendência aparece na ficha dessas marcas)</span></label>
+      ${multiCheckList('relatedBrands', DB.brands, t.relatedBrands)}
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Aplicação comercial</label><input name="aplicacaoComercial" value="${esc(t.aplicacaoComercial)}"></div>
+      <div class="field"><label>Relevância</label><select name="relevancia">${['Alta','Média','Baixa'].map(r=>`<option ${t.relevancia===r?'selected':''}>${r}</option>`).join('')}</select></div>
+    </div>
+    <div class="field"><label>Observações</label><textarea name="observacoes">${esc(t.observacoes)}</textarea></div>
+    <div class="modal-actions">
+      <div>${t0?`<button type="button" class="btn danger small" id="delTrendBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachTendenciasEvents(){
+  document.getElementById('newTrendBtn').addEventListener('click', ()=>openTrendModal());
+  document.querySelectorAll('.record-card').forEach(el=>el.addEventListener('click',()=>openTrendDetail(el.dataset.id)));
+}
+function openTrendModal(t0){
+  openModal(trendForm(t0));
+  document.getElementById('trendForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const obj = Object.fromEntries(fd.entries());
+    delete obj.relatedBrands;
+    obj.relatedBrands = fd.getAll('relatedBrands');
+    if(t0){ Object.assign(t0, obj); } else { DB.trends.push({id:uid(), createdAt:new Date().toISOString(), ...obj}); }
+    await save('trends'); closeModal(); closeDrawer(); render(); toast('Tendência salva');
+  });
+  if(t0){
+    document.getElementById('delTrendBtn').addEventListener('click', async ()=>{
+      DB.trends = DB.trends.filter(x=>x.id!==t0.id); await save('trends'); closeModal(); closeDrawer(); render(); toast('Tendência excluída');
+    });
+  }
+}
+function openTrendDetail(id){
+  const t = DB.trends.find(x=>x.id===id); if(!t) return;
+  const idx = DB.trends.indexOf(t);
+  const brands = (t.relatedBrands||[]).map(bid=>DB.brands.find(b=>b.id===bid)).filter(Boolean);
+  const contents = contentForTrend(t.id);
+  const lib = libraryForTrend(t.id);
+  openDrawer(`
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    <div class="archive-no">TENDÊNCIA ${archiveNo(DB.trends, idx)}</div>
+    <h2>${esc(t.nome)}</h2>
+    <div class="tag-row"><span class="tag">${esc(t.temporada)||''} ${esc(t.ano)||''}</span>${t.relevancia?`<span class="tag">Relevância ${esc(t.relevancia)}</span>`:''}</div>
+    <div style="margin-top:16px;"><button class="btn small" id="editTrendBtn">Editar</button></div>
+    <div class="dblock"><div class="dgrid">
+      <div><div class="dlabel">Origem</div><div class="dval">${esc(t.origem)||'—'}</div></div>
+      <div><div class="dlabel">Cores</div><div class="dval">${esc(t.cores)||'—'}</div></div>
+      <div><div class="dlabel">Tecidos</div><div class="dval">${esc(t.tecidos)||'—'}</div></div>
+      <div><div class="dlabel">Modelagens/Silhuetas</div><div class="dval">${esc(t.modelagens)||'—'}</div></div>
+      <div><div class="dlabel">Estampas/Materiais</div><div class="dval">${esc(t.estampas)||'—'}</div></div>
+      <div><div class="dlabel">Aplicação comercial</div><div class="dval">${esc(t.aplicacaoComercial)||'—'}</div></div>
+    </div></div>
+    <div class="dblock"><div class="dlabel">Observações</div><div class="dval">${esc(t.observacoes)||'—'}</div></div>
+
+    <div class="dblock" style="border-top:2px solid var(--clay);">
+      <div class="dlabel" style="color:var(--clay);">Marcas relacionadas</div>
+      <div class="tag-row">${brands.length?brands.map(b=>relTag(b,'marcas')).join(''):'<span class="rel-empty">Nenhuma marca vinculada ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Conteúdos gerados a partir desta tendência</div>
+      <div class="tag-row">${contents.length?contents.map(c=>relTag(c,'editorial')).join(''):'<span class="rel-empty">Nenhum conteúdo vinculado ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Referências na biblioteca</div>
+      <div class="tag-row">${lib.length?lib.map(l=>relTag(l,'biblioteca')).join(''):'<span class="rel-empty">Nenhuma referência vinculada ainda.</span>'}</div>
+    </div>
+  `);
+  attachGotoLinks();
+  document.getElementById('editTrendBtn').addEventListener('click', ()=>openTrendModal(t));
+}
+
+
+/* ================================================================
+   COLEÇÕES
+   ================================================================ */
+function viewColecoes(){
+  return `
+  <div class="section-head">
+    <div><h2>Coleções</h2><div class="section-sub">Coleções analisadas por marca e temporada</div></div>
+    <button class="btn" id="newColBtn">+ Nova coleção</button>
+  </div>
+  <div class="grid cols-3">
+    ${DB.collections.length ? DB.collections.map((c,i)=>`
+      <div class="record-card" data-id="${c.id}">
+        <div class="archive-no">COLEÇÃO ${archiveNo(DB.collections,i)}</div>
+        <h3>${esc(c.marca)}</h3>
+        <div class="meta">${esc(c.temporada||'')} ${esc(c.ano||'')} · ${esc(c.qtdLooks||'?')} looks</div>
+        <div class="tag-row">${(c.coresPrincipais||'').split(',').filter(Boolean).slice(0,4).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join('')}</div>
+      </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">▦</span>Nenhuma coleção cadastrada.</div>`}
+  </div>`;
+}
+function colForm(c0){
+  const c = c0 || {marca:'',temporada:'',ano:new Date().getFullYear(),qtdLooks:'',coresPrincipais:'',tecidosPrincipais:'',pecasChave:'',produtosComerciais:'',produtosConceito:'',insights:'',relatedBrands:[]};
+  return `
+  <div class="modal-head"><h3>${c0?'Editar coleção':'Nova coleção'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="colForm">
+    <div class="field-row">
+      <div class="field"><label>Marca (nome de exibição)</label><input required name="marca" value="${esc(c.marca)}"></div>
+      <div class="field"><label>Quantidade de looks</label><input name="qtdLooks" value="${esc(c.qtdLooks)}"></div>
+    </div>
+    <div class="field"><label>Marcas cadastradas vinculadas</label>${multiCheckList('relatedBrands', DB.brands, c.relatedBrands)}</div>
+    <div class="field-row">
+      <div class="field"><label>Temporada</label><input name="temporada" value="${esc(c.temporada)}"></div>
+      <div class="field"><label>Ano</label><input name="ano" value="${esc(c.ano)}"></div>
+    </div>
+    <div class="field"><label>Cores principais</label><input name="coresPrincipais" value="${esc(c.coresPrincipais)}"></div>
+    <div class="field"><label>Tecidos principais</label><input name="tecidosPrincipais" value="${esc(c.tecidosPrincipais)}"></div>
+    <div class="field"><label>Peças-chave</label><input name="pecasChave" value="${esc(c.pecasChave)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Produtos comerciais</label><input name="produtosComerciais" value="${esc(c.produtosComerciais)}"></div>
+      <div class="field"><label>Produtos conceito</label><input name="produtosConceito" value="${esc(c.produtosConceito)}"></div>
+    </div>
+    <div class="field"><label>Insights</label><textarea name="insights">${esc(c.insights)}</textarea></div>
+    <div class="modal-actions">
+      <div>${c0?`<button type="button" class="btn danger small" id="delColBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachColecoesEvents(){
+  document.getElementById('newColBtn').addEventListener('click', ()=>openColModal());
+  document.querySelectorAll('.record-card').forEach(el=>el.addEventListener('click',()=>openColDetail(el.dataset.id)));
+}
+function openColModal(c0){
+  openModal(colForm(c0));
+  document.getElementById('colForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const obj = Object.fromEntries(fd.entries());
+    delete obj.relatedBrands;
+    obj.relatedBrands = fd.getAll('relatedBrands');
+    if(c0){ Object.assign(c0, obj); } else { DB.collections.push({id:uid(), ...obj}); }
+    await save('collections'); closeModal(); closeDrawer(); render(); toast('Coleção salva');
+  });
+  if(c0){
+    document.getElementById('delColBtn').addEventListener('click', async ()=>{
+      DB.collections = DB.collections.filter(x=>x.id!==c0.id); await save('collections'); closeModal(); closeDrawer(); render(); toast('Coleção excluída');
+    });
+  }
+}
+function openColDetail(id){
+  const c = DB.collections.find(x=>x.id===id); if(!c) return;
+  const idx = DB.collections.indexOf(c);
+  const brands = brandsForCollection(c.id);
+  const contents = contentForCollection(c.id);
+  openDrawer(`
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    <div class="archive-no">COLEÇÃO ${archiveNo(DB.collections, idx)}</div>
+    <h2>${esc(c.marca)}</h2>
+    <div class="tag-row"><span class="tag">${esc(c.temporada)||''} ${esc(c.ano)||''}</span></div>
+    <div style="margin-top:16px;"><button class="btn small" id="editColBtn">Editar</button></div>
+    <div class="dblock"><div class="dgrid">
+      <div><div class="dlabel">Looks</div><div class="dval">${esc(c.qtdLooks)||'—'}</div></div>
+      <div><div class="dlabel">Cores principais</div><div class="dval">${esc(c.coresPrincipais)||'—'}</div></div>
+      <div><div class="dlabel">Tecidos principais</div><div class="dval">${esc(c.tecidosPrincipais)||'—'}</div></div>
+      <div><div class="dlabel">Peças-chave</div><div class="dval">${esc(c.pecasChave)||'—'}</div></div>
+      <div><div class="dlabel">Produtos comerciais</div><div class="dval">${esc(c.produtosComerciais)||'—'}</div></div>
+      <div><div class="dlabel">Produtos conceito</div><div class="dval">${esc(c.produtosConceito)||'—'}</div></div>
+    </div></div>
+    <div class="dblock"><div class="dlabel">Insights</div><div class="dval">${esc(c.insights)||'—'}</div></div>
+    <div class="dblock" style="border-top:2px solid var(--clay);">
+      <div class="dlabel" style="color:var(--clay);">Marcas vinculadas</div>
+      <div class="tag-row">${brands.length?brands.map(b=>relTag(b,'marcas')).join(''):'<span class="rel-empty">Nenhuma marca vinculada ainda.</span>'}</div>
+    </div>
+    <div class="dblock">
+      <div class="dlabel">Conteúdos vinculados</div>
+      <div class="tag-row">${contents.length?contents.map(e=>relTag(e,'editorial')).join(''):'<span class="rel-empty">Nenhum conteúdo vinculado ainda.</span>'}</div>
+    </div>
+  `);
+  attachGotoLinks();
+  document.getElementById('editColBtn').addEventListener('click', ()=>openColModal(c));
+}
+
+
+/* ================================================================
+   CONCORRENTES (tabela comparativa derivada do Banco de Marcas)
+   ================================================================ */
+function viewConcorrentes(){
+  if(!DB.brands.length) return `<div class="empty-state"><span class="ic">⇄</span>Cadastre marcas no Banco de Marcas para compará-las aqui.</div>`;
+  return `
+  <div class="section-head"><div><h2>Concorrentes</h2><div class="section-sub">Comparativo entre as marcas cadastradas</div></div></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Marca</th><th>Preço</th><th>Posicionamento</th><th>Estilo</th><th>Tecidos</th><th>Modelagens</th><th>Instagram</th><th>Diferenciais</th></tr></thead>
+    <tbody>
+      ${DB.brands.map(b=>`<tr>
+        <td><strong>${esc(b.nome)}</strong></td>
+        <td>${esc(b.preco)||'—'}</td>
+        <td>${esc(b.posicionamento)||'—'}</td>
+        <td>${esc(b.estilo)||'—'}</td>
+        <td>${esc(b.tecidos)||'—'}</td>
+        <td>${esc(b.modelagens)||'—'}</td>
+        <td>${esc(b.instagram)||'—'}</td>
+        <td>${esc(b.diferenciais)||'—'}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table></div>`;
+}
+
+
+/* ================================================================
+   PESQUISA DE MERCADO (visitas)
+   ================================================================ */
+function viewPesquisa(){
+  return `
+  <div class="section-head">
+    <div><h2>Pesquisa de Mercado</h2><div class="section-sub">Registro de visitas a lojas e shoppings</div></div>
+    <button class="btn" id="newVisitBtn">+ Nova visita</button>
+  </div>
+  <div class="grid cols-3">
+    ${DB.market.length ? DB.market.map((m,i)=>`
+      <div class="record-card" data-id="${m.id}">
+        <div class="archive-no">VISITA ${archiveNo(DB.market,i)}</div>
+        <h3>${esc(m.loja)}</h3>
+        <div class="meta">${esc(m.shopping||'')}${m.cidade?' · '+esc(m.cidade):''} · ${fmtDate(m.data)}</div>
+        <div class="meta" style="margin-top:6px;">${esc(m.faixaPreco)||''}</div>
+      </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">⚲</span>Nenhuma visita registrada.</div>`}
+  </div>`;
+}
+function visitForm(m0){
+  const m = m0 || {shopping:'',loja:'',cidade:'',data:new Date().toISOString().slice(0,10),produtosObservados:'',faixaPreco:'',observacoes:'',insights:''};
+  return `
+  <div class="modal-head"><h3>${m0?'Editar visita':'Nova visita'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="visitForm">
+    <div class="field-row">
+      <div class="field"><label>Loja</label><input required name="loja" value="${esc(m.loja)}"></div>
+      <div class="field"><label>Shopping</label><input name="shopping" value="${esc(m.shopping)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Cidade</label><input name="cidade" value="${esc(m.cidade)}"></div>
+      <div class="field"><label>Data</label><input type="date" name="data" value="${m.data}"></div>
+    </div>
+    <div class="field"><label>Produtos observados</label><input name="produtosObservados" value="${esc(m.produtosObservados)}"></div>
+    <div class="field"><label>Faixa de preço</label><input name="faixaPreco" value="${esc(m.faixaPreco)}"></div>
+    <div class="field"><label>Observações</label><textarea name="observacoes">${esc(m.observacoes)}</textarea></div>
+    <div class="field"><label>Insights</label><textarea name="insights">${esc(m.insights)}</textarea></div>
+    <div class="modal-actions">
+      <div>${m0?`<button type="button" class="btn danger small" id="delVisitBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachPesquisaEvents(){
+  document.getElementById('newVisitBtn').addEventListener('click', ()=>openVisitModal());
+  document.querySelectorAll('.record-card').forEach(el=>el.addEventListener('click',()=>{
+    const m = DB.market.find(x=>x.id===el.dataset.id); if(m) openVisitModal(m);
+  }));
+}
+function openVisitModal(m0){
+  openModal(visitForm(m0));
+  document.getElementById('visitForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const obj = Object.fromEntries(new FormData(e.target).entries());
+    if(m0){ Object.assign(m0, obj); } else { DB.market.push({id:uid(), ...obj}); }
+    await save('market'); closeModal(); render(); toast('Visita registrada');
+  });
+  if(m0){
+    document.getElementById('delVisitBtn').addEventListener('click', async ()=>{
+      DB.market = DB.market.filter(x=>x.id!==m0.id); await save('market'); closeModal(); render(); toast('Visita excluída');
+    });
+  }
+}
+
+
+/* ================================================================
+   BIBLIOTECA
+   ================================================================ */
+const LIB_CATS = ['Artigos','Livros','Revistas','Podcasts','Vídeos','Pinterest','Instagram','Desfiles','Fashion Weeks'];
+function viewBiblioteca(){
+  return `
+  <div class="section-head">
+    <div><h2>Biblioteca</h2><div class="section-sub">Referências e materiais de estudo</div></div>
+    <button class="btn" id="newLibBtn">+ Nova referência</button>
+  </div>
+  <div class="grid cols-3">
+    ${DB.library.length ? DB.library.map(l=>`
+      <div class="record-card" data-id="${l.id}">
+        <div class="archive-no">${esc(l.categoria).toUpperCase()}</div>
+        <h3>${esc(l.titulo)}</h3>
+        <div class="meta">${esc(l.autorFonte)||''}</div>
+        <div class="tag-row">${(l.tags||'').split(',').filter(Boolean).slice(0,3).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join('')}</div>
+      </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">▧</span>Nenhuma referência salva ainda.</div>`}
+  </div>`;
+}
+function libForm(l0){
+  const l = l0 || {titulo:'',categoria:'Artigos',autorFonte:'',link:'',tags:'',notas:'',relatedBrands:[],relatedTrends:[]};
+  return `
+  <div class="modal-head"><h3>${l0?'Editar referência':'Nova referência'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="libForm">
+    <div class="field"><label>Título</label><input required name="titulo" value="${esc(l.titulo)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Categoria</label><select name="categoria">${LIB_CATS.map(c=>`<option ${l.categoria===c?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="field"><label>Autor / Fonte</label><input name="autorFonte" value="${esc(l.autorFonte)}"></div>
+    </div>
+    <div class="field"><label>Link / Anexo</label><input name="link" value="${esc(l.link)}"></div>
+    <div class="field"><label>Tags</label><input name="tags" value="${esc(l.tags)}"></div>
+    <div class="field-row">
+      <div class="field"><label>Marcas relacionadas</label>${multiCheckList('relatedBrands', DB.brands, l.relatedBrands)}</div>
+      <div class="field"><label>Tendências relacionadas</label>${multiCheckList('relatedTrends', DB.trends, l.relatedTrends)}</div>
+    </div>
+    <div class="field"><label>Notas</label><textarea name="notas">${esc(l.notas)}</textarea></div>
+    <div class="modal-actions">
+      <div>${l0?`<button type="button" class="btn danger small" id="delLibBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachBibliotecaEvents(){
+  document.getElementById('newLibBtn').addEventListener('click', ()=>openLibModal());
+  document.querySelectorAll('.record-card').forEach(el=>el.addEventListener('click',()=>{
+    const l = DB.library.find(x=>x.id===el.dataset.id); if(l) openLibModal(l);
+  }));
+}
+function openLibModal(l0){
+  openModal(libForm(l0));
+  document.getElementById('libForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const obj = Object.fromEntries(fd.entries());
+    delete obj.relatedBrands; delete obj.relatedTrends;
+    obj.relatedBrands = fd.getAll('relatedBrands');
+    obj.relatedTrends = fd.getAll('relatedTrends');
+    if(l0){ Object.assign(l0, obj); } else { DB.library.push({id:uid(), ...obj}); }
+    await save('library'); closeModal(); render(); toast('Referência salva');
+  });
+  if(l0){
+    document.getElementById('delLibBtn').addEventListener('click', async ()=>{
+      DB.library = DB.library.filter(x=>x.id!==l0.id); await save('library'); closeModal(); render(); toast('Referência excluída');
+    });
+  }
+}
+
+
+/* ================================================================
+   MOODBOARDS
+   ================================================================ */
+const MOOD_CATS = ['Primavera','Verão','Outono','Inverno','Jeans','Casual','Linho','Minimalismo','Boho','Contemporâneo','Editorial','Lifestyle'];
+let currentMoodImages = [];
+function viewMoodboards(){
+  return `
+  <div class="section-head">
+    <div><h2>Moodboards</h2><div class="section-sub">Painéis visuais por estação e estilo</div></div>
+    <button class="btn" id="newMoodBtn">+ Novo moodboard</button>
+  </div>
+  <div class="moodboard-grid">
+    ${DB.moodboards.length ? DB.moodboards.map(m=>{
+      const cover = (m.images && m.images[0]);
+      return `<div class="mood-card" data-id="${m.id}">
+        <div class="swatch" ${cover?`style="background-image:url('${cover}');background-size:cover;background-position:center;color:transparent;"`:''}>${cover?'':esc(m.categoria)}</div>
+        <div class="mc-body"><div class="mc-cat">${esc(m.categoria)}${m.images&&m.images.length?` · ${m.images.length} imagens`:''}</div><h4>${esc(m.titulo)}</h4></div>
+      </div>`;
+    }).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">▨</span>Nenhum moodboard criado ainda.</div>`}
+  </div>`;
+}
+function moodThumbsHtml(){
+  return currentMoodImages.map((src,i)=>`
+    <div class="mood-thumb"><img src="${src}"><button type="button" class="mood-thumb-del" data-idx="${i}">✕</button></div>
+  `).join('');
+}
+function moodForm(m0){
+  const m = m0 || {titulo:'',categoria:'Minimalismo',comentarios:'',links:''};
+  currentMoodImages = (m0 && m0.images) ? m0.images.slice() : [];
+  return `
+  <div class="modal-head"><h3>${m0?'Editar moodboard':'Novo moodboard'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="moodForm">
+    <div class="field"><label>Título</label><input required name="titulo" value="${esc(m.titulo)}"></div>
+    <div class="field"><label>Categoria</label><select name="categoria">${MOOD_CATS.map(c=>`<option ${m.categoria===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="field">
+      <label>Imagens</label>
+      <input type="file" id="moodFileInput" accept="image/*" multiple>
+      <div class="mood-thumb-row" id="moodThumbRow">${moodThumbsHtml()}</div>
+    </div>
+    <div class="field"><label>Links de imagens externas (opcional, um por linha)</label><textarea name="links">${esc(m.links)}</textarea></div>
+    <div class="field"><label>Comentários</label><textarea name="comentarios">${esc(m.comentarios)}</textarea></div>
+    <div class="modal-actions">
+      <div>${m0?`<button type="button" class="btn danger small" id="delMoodBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function refreshMoodThumbs(){
+  const row = document.getElementById('moodThumbRow');
+  if(!row) return;
+  row.innerHTML = moodThumbsHtml();
+  row.querySelectorAll('.mood-thumb-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      currentMoodImages.splice(Number(btn.dataset.idx),1);
+      refreshMoodThumbs();
+    });
+  });
+}
+function attachMoodboardsEvents(){
+  document.getElementById('newMoodBtn').addEventListener('click', ()=>openMoodModal());
+  document.querySelectorAll('.mood-card').forEach(el=>el.addEventListener('click',()=>{
+    const m = DB.moodboards.find(x=>x.id===el.dataset.id); if(m) openMoodModal(m);
+  }));
+}
+function openMoodModal(m0){
+  openModal(moodForm(m0));
+  refreshMoodThumbs();
+  document.getElementById('moodFileInput').addEventListener('change', async e=>{
+    const files = Array.from(e.target.files || []);
+    for(const file of files){
+      if(file.size > 1_500_000){ toast('Imagem muito grande, escolha uma menor'); continue; }
+      const dataUrl = await new Promise((res,rej)=>{
+        const r = new FileReader();
+        r.onload = ()=>res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+      currentMoodImages.push(dataUrl);
+    }
+    refreshMoodThumbs();
+    e.target.value = '';
+  });
+  document.getElementById('moodForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const obj = Object.fromEntries(new FormData(e.target).entries());
+    obj.images = currentMoodImages.slice();
+    if(m0){ Object.assign(m0, obj); } else { DB.moodboards.push({id:uid(), ...obj}); }
+    try{
+      await save('moodboards');
+    }catch(err){
+      toast('Não deu para salvar — as imagens podem estar pesadas demais');
+      return;
+    }
+    closeModal(); render(); toast('Moodboard salvo');
+  });
+  if(m0){
+    document.getElementById('delMoodBtn').addEventListener('click', async ()=>{
+      DB.moodboards = DB.moodboards.filter(x=>x.id!==m0.id); await save('moodboards'); closeModal(); render(); toast('Moodboard excluído');
+    });
+  }
+}
+
+
+/* ================================================================
+   OBJETIVOS
+   ================================================================ */
+function viewObjetivos(){
+  return `
+  <div class="section-head">
+    <div><h2>Objetivos</h2><div class="section-sub">Metas de produtividade da curadoria</div></div>
+    <button class="btn" id="newGoalBtn">+ Nova meta</button>
+  </div>
+  <div class="grid cols-2">
+    ${DB.goals.length ? DB.goals.map(g=>{
+      const pct = g.meta>0 ? Math.min(100, Math.round((g.atual/g.meta)*100)) : 0;
+      return `<div class="card" data-id="${g.id}" style="cursor:pointer;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <strong style="font-family:var(--font-display);font-size:16px;">${esc(g.titulo)}</strong>
+          <span style="font-size:12px;color:#847d6c;">${g.atual||0} / ${g.meta} ${esc(g.unidade||'')}</span>
+        </div>
+        <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:${pct}%;"></div></div>
+        <div style="font-size:11px;color:#9a9280;margin-top:6px;">${esc(g.periodo||'')}</div>
+      </div>`;
+    }).join('') : `<div class="empty-state" style="grid-column:1/-1;"><span class="ic">◎</span>Nenhuma meta definida ainda.</div>`}
+  </div>`;
+}
+function goalForm(g0){
+  const g = g0 || {titulo:'',meta:5,atual:0,unidade:'itens',periodo:'Semanal'};
+  return `
+  <div class="modal-head"><h3>${g0?'Editar meta':'Nova meta'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <form id="goalForm">
+    <div class="field"><label>Título</label><input required name="titulo" value="${esc(g.titulo)}" placeholder="ex: Analisar 5 marcas por semana"></div>
+    <div class="field-row">
+      <div class="field"><label>Meta (número)</label><input type="number" name="meta" value="${g.meta}"></div>
+      <div class="field"><label>Progresso atual</label><input type="number" name="atual" value="${g.atual}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Unidade</label><input name="unidade" value="${esc(g.unidade)}"></div>
+      <div class="field"><label>Período</label><select name="periodo">${['Semanal','Mensal','Trimestral'].map(p=>`<option ${g.periodo===p?'selected':''}>${p}</option>`).join('')}</select></div>
+    </div>
+    <div class="modal-actions">
+      <div>${g0?`<button type="button" class="btn danger small" id="delGoalBtn">Excluir</button>`:''}</div>
+      <button type="submit" class="btn small">Salvar</button>
+    </div>
+  </form>`;
+}
+function attachObjetivosEvents(){
+  document.getElementById('newGoalBtn').addEventListener('click', ()=>openGoalModal());
+  document.querySelectorAll('[data-id]').forEach(el=>el.addEventListener('click',()=>{
+    const g = DB.goals.find(x=>x.id===el.dataset.id); if(g) openGoalModal(g);
+  }));
+}
+function openGoalModal(g0){
+  openModal(goalForm(g0));
+  document.getElementById('goalForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const obj = Object.fromEntries(new FormData(e.target).entries());
+    obj.meta = Number(obj.meta)||0; obj.atual = Number(obj.atual)||0;
+    if(g0){ Object.assign(g0, obj); } else { DB.goals.push({id:uid(), ...obj}); }
+    await save('goals'); closeModal(); render(); toast('Meta salva');
+  });
+  if(g0){
+    document.getElementById('delGoalBtn').addEventListener('click', async ()=>{
+      DB.goals = DB.goals.filter(x=>x.id!==g0.id); await save('goals'); closeModal(); render(); toast('Meta excluída');
+    });
+  }
+}
+
+
+/* ================================================================
+   RELATÓRIOS
+   ================================================================ */
+function viewRelatorios(){
+  const catCount = {};
+  DB.brands.forEach(b=>{ const c=b.categoria||'Sem categoria'; catCount[c]=(catCount[c]||0)+1; });
+  const statusCount = {};
+  DB.brands.forEach(b=>{ statusCount[b.status]=(statusCount[b.status]||0)+1; });
+  const pubCount = {};
+  DB.editorial.forEach(e=>{ if(e.status==='Publicado'){ const p=e.plataforma||'Outros'; pubCount[p]=(pubCount[p]||0)+1; } });
+  const maxCat = Math.max(1,...Object.values(catCount));
+  const maxStatus = Math.max(1,...Object.values(statusCount));
+  const maxPub = Math.max(1,...Object.values(pubCount));
+
+  function bars(obj, max){
+    return Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`
+      <div class="report-bar-row">
+        <div class="report-bar-label">${esc(k)}</div>
+        <div class="report-bar-track"><div class="report-bar-fill" style="width:${(v/max)*100}%;"></div></div>
+        <div class="report-bar-val">${v}</div>
+      </div>`).join('') || '<div class="empty-state">Sem dados ainda.</div>';
+  }
+  return `
+  <div class="section-head"><div><h2>Relatórios</h2><div class="section-sub">Visão consolidada da curadoria</div></div></div>
+  <div class="grid cols-4" style="margin-bottom:26px;">
+    <div class="card stat-card"><div class="num">${DB.brands.length}</div><div class="lbl">Marcas cadastradas</div></div>
+    <div class="card stat-card"><div class="num">${DB.editorial.filter(e=>e.status==='Publicado').length}</div><div class="lbl">Conteúdos publicados</div></div>
+    <div class="card stat-card"><div class="num">${DB.trends.length}</div><div class="lbl">Tendências registradas</div></div>
+    <div class="card stat-card"><div class="num">${DB.tasks.filter(t=>t.concluida).length}/${DB.tasks.length}</div><div class="lbl">Tarefas concluídas</div></div>
+  </div>
+  <div class="grid cols-2">
+    <div class="card"><h3 style="font-family:var(--font-display);font-size:16px;margin-bottom:14px;">Marcas mais pesquisadas por categoria</h3>${bars(catCount,maxCat)}</div>
+    <div class="card"><h3 style="font-family:var(--font-display);font-size:16px;margin-bottom:14px;">Marcas por status</h3>${bars(statusCount,maxStatus)}</div>
+  </div>
+  <div class="card" style="margin-top:16px;"><h3 style="font-family:var(--font-display);font-size:16px;margin-bottom:14px;">Conteúdos publicados por plataforma</h3>${bars(pubCount,maxPub)}</div>
+  `;
+}
+
+
+/* ================================================================
+   BUSCA INTELIGENTE
+   ================================================================ */
+function viewBusca(){
+  const q = searchTerm;
+  const matchB = DB.brands.filter(b=>JSON.stringify(b).toLowerCase().includes(q));
+  const matchT = DB.trends.filter(t=>JSON.stringify(t).toLowerCase().includes(q));
+  const matchC = DB.collections.filter(c=>JSON.stringify(c).toLowerCase().includes(q));
+  const matchL = DB.library.filter(l=>JSON.stringify(l).toLowerCase().includes(q));
+  const total = matchB.length+matchT.length+matchC.length+matchL.length;
+  if(total===0) return `<div class="empty-state"><span class="ic">⌕</span>Nenhum resultado para "${esc(q)}".</div>`;
+  function section(title, list, cls){
+    if(!list.length) return '';
+    return `<div class="section-head" style="margin-top:22px;"><h2 style="font-size:16px;">${title} (${list.length})</h2></div>
+      <div class="grid cols-3">${list.map(x=>`<div class="record-card" data-${cls}="${x.id}">
+        <h3>${esc(x.nome||x.titulo||x.marca)}</h3>
+        <div class="meta">${esc(x.categoria||x.temporada||'')}</div>
+      </div>`).join('')}</div>`;
+  }
+  return section('Marcas', matchB, 'brand') + section('Tendências', matchT, 'trend') + section('Coleções', matchC, 'col') + section('Biblioteca', matchL, 'lib');
+}
+function attachBuscaEvents(){
+  document.querySelectorAll('[data-brand]').forEach(el=>el.addEventListener('click',()=>openBrandDetail(el.dataset.brand)));
+  document.querySelectorAll('[data-trend]').forEach(el=>el.addEventListener('click',()=>openTrendDetail(el.dataset.trend)));
+  document.querySelectorAll('[data-col]').forEach(el=>el.addEventListener('click',()=>openColDetail(el.dataset.col)));
+  document.querySelectorAll('[data-lib]').forEach(el=>el.addEventListener('click',()=>{ const l=DB.library.find(x=>x.id===el.dataset.lib); if(l) openLibModal(l); }));
+}
+
+
+/* ================================================================
+   ASSISTENTE — painel de insights gerado localmente a partir dos seus
+   dados (sem chamadas externas, funciona 100% offline no navegador)
+   ================================================================ */
+let insightHistory = [];
+
+const INSIGHT_ACTIONS = [
+  {label:'Marcas pendentes de decisão', fn:()=>{
+    const list = DB.brands.filter(b=>b.status==='Em avaliação'||b.status==='Pesquisando');
+    if(!list.length) return 'Nenhuma marca em "Pesquisando" ou "Em avaliação" no momento — o funil de análise está em dia.';
+    const linhas = list.map(b=>{
+      const t = trendsForBrand(b.id).length, c = collectionsForBrand(b.id).length;
+      return `• ${b.nome} (${b.status}) — ${t} tendência(s) e ${c} coleção(ões) vinculadas${b.diferenciais?`. Diferencial: ${b.diferenciais}`:''}`;
+    });
+    return `${list.length} marca(s) aguardando decisão:\n\n${linhas.join('\n')}`;
+  }},
+  {label:'Prioridades da semana', fn:()=>{
+    const pend = DB.tasks.filter(t=>!t.concluida).sort((a,b)=>{
+      const ordem = {Alta:0,Média:1,Baixa:2};
+      return (ordem[a.prioridade]??1) - (ordem[b.prioridade]??1) || (a.prazo||'').localeCompare(b.prazo||'');
+    });
+    if(!pend.length) return 'Nenhuma tarefa pendente — agenda limpa.';
+    const linhas = pend.slice(0,8).map(t=>`• [${t.prioridade}] ${t.titulo} — ${t.categoria}, prazo ${fmtDate(t.prazo)}`);
+    return `Ordem sugerida (por prioridade e prazo):\n\n${linhas.join('\n')}`;
+  }},
+  {label:'Marcas em múltiplas tendências', fn:()=>{
+    const contagem = {};
+    DB.trends.forEach(t=>(t.relatedBrands||[]).forEach(bid=>{ contagem[bid]=(contagem[bid]||0)+1; }));
+    const destaques = Object.entries(contagem).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]);
+    if(!destaques.length) return 'Ainda não há marcas repetidas em mais de uma tendência. Vincule marcas às tendências na ficha de cada uma para começar a ver esse cruzamento.';
+    const linhas = destaques.map(([bid,n])=>{
+      const b = DB.brands.find(x=>x.id===bid);
+      return `• ${b?b.nome:'(marca removida)'} aparece em ${n} tendências — candidata forte a ganhar destaque editorial.`;
+    });
+    return `Marcas que se repetem em várias tendências registradas:\n\n${linhas.join('\n')}`;
+  }},
+  {label:'Lacunas de conteúdo', fn:()=>{
+    const semConteudo = DB.trends.filter(t=>contentForTrend(t.id).length===0);
+    const marcasSemConteudo = DB.brands.filter(b=>contentForBrand(b.id).length===0 && (b.status==='Acompanhando'||b.status==='Aprovada'));
+    let out = '';
+    out += semConteudo.length ? `Tendências ainda sem nenhum conteúdo planejado:\n${semConteudo.map(t=>`• ${t.nome}`).join('\n')}\n\n` : 'Todas as tendências registradas já têm ao menos um conteúdo vinculado.\n\n';
+    out += marcasSemConteudo.length ? `Marcas acompanhadas/aprovadas sem conteúdo ainda:\n${marcasSemConteudo.map(b=>`• ${b.nome}`).join('\n')}` : 'Todas as marcas acompanhadas ou aprovadas já geraram conteúdo.';
+    return out;
+  }},
+  {label:'Panorama do portfólio de marcas', fn:()=>{
+    if(!DB.brands.length) return 'Nenhuma marca cadastrada ainda.';
+    const porCategoria = {};
+    DB.brands.forEach(b=>{ const c=b.categoria||'Sem categoria'; porCategoria[c]=(porCategoria[c]||0)+1; });
+    const linhas = Object.entries(porCategoria).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`• ${c}: ${n} marca(s)`);
+    return `Distribuição atual do portfólio por categoria:\n\n${linhas.join('\n')}\n\nUse isso para identificar excesso de concentração numa categoria ou espaços em branco a explorar.`;
+  }},
+];
+
+function viewAssistente(){
+  return `
+  <div class="section-head"><div><h2>Assistente</h2><div class="section-sub">Insights gerados localmente a partir dos seus dados — sem servidor, sem internet</div></div></div>
+  <div class="ai-quick" id="aiQuick">
+    ${INSIGHT_ACTIONS.map((a,i)=>`<button data-i="${i}">${a.label}</button>`).join('')}
+  </div>
+  <div class="chat-box" id="chatBox">
+    ${insightHistory.length ? insightHistory.map(m=>`<div class="chat-msg ${m.role}"><div class="who">${m.role==='user'?'Você pediu':'Assistente'}</div><div class="txt">${esc(m.text)}</div></div>`).join('')
+      : `<div class="empty-state"><span class="ic">✦</span>Escolha uma das análises acima. Elas leem diretamente o Banco de Marcas, Tendências, Agenda e Editorial.</div>`}
+  </div>
+  <div style="font-size:11px;color:#9a9280;margin-top:10px;">Este painel não usa inteligência artificial externa — as respostas são geradas por regras que leem seus próprios dados, para funcionar mesmo sem conexão.</div>
+  `;
+}
+function attachAssistenteEvents(){
+  document.getElementById('aiQuick').querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=> runInsight(INSIGHT_ACTIONS[btn.dataset.i]));
+  });
+}
+function runInsight(action){
+  insightHistory.push({role:'user', text:action.label});
+  insightHistory.push({role:'assistant', text:action.fn()});
+  if(insightHistory.length > 20) insightHistory = insightHistory.slice(-20);
+  render();
+  const box = document.getElementById('chatBox');
+  if(box) box.scrollTop = box.scrollHeight;
+}
+
+
+/* ================================================================
+   INIT
+   ================================================================ */
+async function init(){
+  await loadAll();
+  renderNav();
+  render();
+}
+init();
+
 </script>
 </body>
 </html>
